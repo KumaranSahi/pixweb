@@ -1,0 +1,40 @@
+.navigation-items-desktop{
+    display: none;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #5d6563;
+}
+
+.sticky-status-margin-top{
+    margin-top: 70px;
+}
+
+.nav-button{
+    color: white;
+    animation-name: fadeIn;
+    animation-duration: 1500ms;
+    display: flex;
+}
+
+.nav-button a{
+    text-decoration: none;
+    color: var(--neutral-mild);
+    cursor: pointer;
+}
+
+.active-desktop{
+    border-bottom: 2px solid var(--primary);
+}
+
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ } 
+
+ @media (min-width:700px){
+    .navigation-items-desktop{
+        display: flex;
+    }
+}
