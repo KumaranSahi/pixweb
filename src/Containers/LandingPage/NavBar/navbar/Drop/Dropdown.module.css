@@ -4,7 +4,7 @@
     right:0px;
     width: 100%;
     height: 90%;
-    background-color: var(--neutral-mild);
+    background-color: var(--neutral);
     z-index: 200;
     box-sizing: border-box;
 }

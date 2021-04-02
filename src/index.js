@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
+import {PixWebServer} from './api/mock-server'
+
+PixWebServer();
 
 ReactDOM.render(
   <React.StrictMode>
