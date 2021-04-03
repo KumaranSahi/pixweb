@@ -1,13 +1,14 @@
 import classes from './DesktopNavMenu.module.css'
 import {NavLink} from 'react-router-dom'
-// import {useContext} from 'react';
 
 const DesktopNavMenu=()=>{
+    
+
     return(
         <div className={`${classes["navigation-items-desktop"]} ${classes["sticky-status-margin-top"]}`}>
                 <p className={classes["nav-button"]}>
                     <NavLink to="/" exact activeClassName={classes["active-desktop"]}>
-                        Catagories
+                        Home
                     </NavLink>
                 </p>
                 <p className={classes["nav-button"]}>

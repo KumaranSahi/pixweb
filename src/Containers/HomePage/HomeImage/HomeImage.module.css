@@ -39,3 +39,9 @@
     margin-top: 0.5rem;
     letter-spacing: 0.1rem;
 }
+
+@media (min-width:700px){
+    .home-image-container{
+        margin-top: 125px;
+    }
+}

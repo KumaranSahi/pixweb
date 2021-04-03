@@ -7,8 +7,10 @@
 }
 
 .sticky-status-margin-top{
-    margin-top: 70px;
+    top: 70px;
+    position: fixed;
 }
+
 
 .nav-button{
     color: white;

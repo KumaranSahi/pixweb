@@ -1,10 +1,12 @@
 import classes from './HomePage.module.css'
-import Carousel from './HomeImage/HomeImage'
+import HomeImage from './HomeImage/HomeImage'
+import HomePageCatagories from './HomePageCatagories/HomePageCatagories'
 
 const HomePage=()=>{
     return(
         <div className={classes["homepage-container"]}>
-            <Carousel/>
+            <HomeImage/>
+            <HomePageCatagories/>
         </div>
     )
 }
