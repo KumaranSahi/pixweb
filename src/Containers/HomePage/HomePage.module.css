@@ -1,0 +1,9 @@
+.homepage-container{
+    margin-top: 70px;
+}
+
+@media (min-width:700px){
+    .homepage-container{
+        margin-top: 0px;
+    }
+}
