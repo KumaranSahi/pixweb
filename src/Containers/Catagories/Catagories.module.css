@@ -1,0 +1,31 @@
+.catagory-container{
+    margin-top: 70px;
+}
+
+.catagory-video-name-list{
+    display: none;
+    width:100%;
+    min-height: 81vh;
+}
+
+.catagory-video-play-area{
+    width:100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.youtube-window{
+    width: 100%;
+}
+
+@media (min-width:700px){
+    .catagory-video-name-list{
+        display: block;
+    }
+
+    .catagory-container{
+        display: grid;
+        margin-top: 123px;
+        grid-template-columns: 1fr 3fr;
+    }
+}
