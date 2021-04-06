@@ -15,7 +15,8 @@ export const CatagoriesProvider=({children})=>{
             case "FILTER_VIDEO_BY_CATAGORY":
                 return{
                     ...state,
-                    currentCatagoryId:action.payload
+                    currentCatagoryId:action.payload,
+                    selectedVideo:state.fullVideoList.filter(({catagoryId})=>catagoryId===action.payload)[0]
                 }
             case "SELECT_VIDEO":
                 return{

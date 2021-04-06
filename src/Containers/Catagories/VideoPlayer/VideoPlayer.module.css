@@ -1,0 +1,101 @@
+.video-player{
+    min-height: 150vh;
+}
+
+.youtube-window{
+    width: 100%;
+}
+
+.options-bar{
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options-bar h2{
+    margin: 0px;
+    font-weight: 200;
+}
+
+.video-name{
+    font-weight: 300;
+    margin: 0px;
+}
+
+.button-outline{
+    outline: none;
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.button-primary{
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.watchlist-dropdown-container{
+    position: relative;
+}
+
+.watchlist-dropdown{
+    position: absolute;
+    background-color: var(--secondary);
+    top: 60%;
+    right: 13%;
+    width: 15rem;
+    list-style: none;
+    padding: 0;
+    min-height: 4rem;
+}
+
+.watchlist-dropdown li{
+    color: white;
+    padding: 0.5rem;
+    margin: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.watchlist-dropdown li:hover{
+    background-color: var(--primary);
+}
+
+.add-new-playlist{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.add-new-playlist svg{
+    font-size: 1.5rem;
+}
+
+.textbox{
+    padding: 0.5rem;
+    outline: 0px;
+    border:0px;
+    letter-spacing: 1px;
+    background-color: var(--neutral-mild);
+}
+
+.textbox:focus{
+    border: 2px solid var(--black);
+}
+
+.description h3{
+    font-weight: 300;
+}
+
+.description p{
+    font-weight: 200;
+}
+
+@media (min-width:700px){
+    .video-player{
+        min-height: 80vh;
+    }
+}

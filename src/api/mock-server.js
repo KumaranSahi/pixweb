@@ -12,6 +12,7 @@ export const PixWebServer=()=>{
         },
         models: {
             fullVideosList:Model,
+            playList:Model
         },
         seeds(server){
             
@@ -25,17 +26,30 @@ export const PixWebServer=()=>{
                     catagory:catagory,
                     catagoryId:catagoryId,
                     author:author,
+                    playlist:null,
                     description:faker.commerce.productDescription(),
-                    rating:faker.datatype.float({'min':3,'max':5}).toFixed(1),
                     recomended:faker.datatype.boolean()
                 })
             ))
+            server.create("playList",{
+                id:faker.datatype.uuid(),
+                name:"My Playlist",
+                videos:[]
+            })
         },
         routes(){
             this.namespace = "api";
             this.timing = 1000;
             this.get("/load-all-videos", schema=>schema.fullVideosLists.all());
-            
+            this.get("/load-all-playlists",  schema=>schema.playLists.all());
+            this.post("/add-new-playlist", (schema,request)=>{
+                let data = JSON.parse(request.requestBody)
+                return schema.playLists.create({
+                    ...data,
+                    videos:[],
+                    id:faker.datatype.uuid()
+                })
+            })
         }
     })
 }
