@@ -10,7 +10,17 @@ export const CatagoriesProvider=({children})=>{
             case "ADD_VIDEOS_TO_LIST":
                 return{
                     ...state,
-                    videoList:[...action.payload]
+                    fullVideoList:[...action.payload]
+                }
+            case "FILTER_VIDEO_BY_CATAGORY":
+                return{
+                    ...state,
+                    currentCatagoryId:action.payload
+                }
+            case "SELECT_VIDEO":
+                return{
+                    ...state,
+                    selectedVideo:{...action.payload}
                 }
             default:
                 return state;
@@ -18,9 +28,19 @@ export const CatagoriesProvider=({children})=>{
     }
 
     const [state,dispatch]=useReducer(catagoriesManipulation,{
-        videoList:[],
-        catagoryurl:null
+        fullVideoList:[],
+        videosByCatagory:[],
+        currentCatagoryId:null,
+        selectedVideo:null
     });
+
+    const getFilteredData=(videoList,id)=>{
+        if(id)
+            return videoList.filter(item=>item.catagoryId===id)
+        return []
+    }
+
+    const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
 
     useEffect(()=>{
         (async()=>{
@@ -35,8 +55,9 @@ export const CatagoriesProvider=({children})=>{
     return(
         <CatagoriesContext.Provider 
             value={{
-                videoList:state.videoList,
-                dispatch:dispatch
+                dispatch:dispatch,
+                videosByCatagory:filteredData,
+                selectedVideo:state.selectedVideo
             }}
         >
             {children}
