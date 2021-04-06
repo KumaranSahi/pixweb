@@ -27,7 +27,7 @@ const hamburger=React.memo(()=>{
                 <div className={lineThree}></div>
                 
             </div>
-            <Dropdown open={iconClicked}/>
+            <Dropdown open={iconClicked} closeDropDown={hamburgerClicked}/>
         </div>
     )
 })

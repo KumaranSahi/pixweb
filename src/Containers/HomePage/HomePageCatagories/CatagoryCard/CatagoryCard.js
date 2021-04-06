@@ -1,4 +1,5 @@
 import classes from './CatagoryCard.module.css'
+import {Link} from 'react-router-dom'
 
 const CatagoryCard=({id,name,description,image})=>{
     return(
@@ -17,9 +18,11 @@ const CatagoryCard=({id,name,description,image})=>{
             <p>
                 {description}
             </p>
-            <button className={`${classes["button-solid"]} ${classes["button-primary"]}`}>
-                Start Learning
-            </button>
+            <Link to={`/catagory/${id}`}>
+                <button className={`${classes["button-solid"]} ${classes["button-primary"]}`}>
+                    Start Learning
+                </button>
+            </Link>
         </div>
     )
 }

@@ -9,7 +9,7 @@ const Navbar=()=>{
     return(
         <nav>
             <div className={classes["navbar"]}>
-                {pathname==="/catagory"&&<Hamburger/>}
+                {pathname.slice(0,9)==="/catagory"&&<Hamburger/>}
                 <Logo/>
             </div>
             <DesktopNavMenu/>
