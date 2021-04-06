@@ -7,6 +7,10 @@
     background-color: var(--secondary);
 }
 
+.video-active{
+    background-color: var(--primary);
+}
+
 .video-name-list li{
     color: var(--white);
     width: 100%;
@@ -16,8 +20,4 @@
 .video-name-list li p{
     margin: 0rem;
     padding: 1rem;
-}
-
-.video-name-list li :hover{
-    background-color: var(--primary);
 }

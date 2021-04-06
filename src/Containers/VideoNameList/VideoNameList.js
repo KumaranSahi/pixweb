@@ -3,7 +3,7 @@ import {CatagoriesContext} from '../../Store/Catagories-context-reducer'
 import { useContext } from 'react/cjs/react.development'
 
 const VideoNameList=({closeDropDown})=>{
-    const {videosByCatagory,dispatch}=useContext(CatagoriesContext)
+    const {videosByCatagory,dispatch,selectedVideo}=useContext(CatagoriesContext)
     return(
         <ul className={classes["video-name-list"]}>
             {
@@ -15,6 +15,7 @@ const VideoNameList=({closeDropDown})=>{
                         })
                         closeDropDown&&closeDropDown()
                         }}
+                        className={selectedVideo&&selectedVideo.id===item.id?classes["video-active"]:null}
                     >
                         <p>
                         {item.name}
