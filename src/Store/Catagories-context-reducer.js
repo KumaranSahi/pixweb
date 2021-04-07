@@ -7,10 +7,20 @@ export const CatagoriesProvider=({children})=>{
 
     const catagoriesManipulation=(state,action)=>{
         switch (action.type) {
-            case "ADD_VIDEOS_TO_LIST":
+            case "CREATE_VIDEOLIST":
                 return{
                     ...state,
                     fullVideoList:[...action.payload]
+                }
+            case "CREATE_PLAYLIST":
+                return{
+                    ...state,
+                    playlists:[...action.payload]
+                }
+            case "ADD_NEWPLAYLIST":    
+            return{
+                    ...state,
+                    playlists:[...state.playlists,action.payload]
                 }
             case "FILTER_VIDEO_BY_CATAGORY":
                 return{
@@ -23,6 +33,13 @@ export const CatagoriesProvider=({children})=>{
                     ...state,
                     selectedVideo:{...action.payload}
                 }
+            case "VIDEO_ADDED_TO_PLAYLIST":
+                return{
+                    ...state,
+                    selectedVideo:{...state.selectedVideo,playlist:action.payload.playlist.id},
+                    fullVideoList:state.fullVideoList.map(item=>item.id===action.payload.video.id?{...item,playlist:action.payload.playlist.id}:item),
+                    playlists:state.playlists.map(item=>item.id===action.payload.playlist.id?{...item,videos:[...item.videos,action.payload.video.id]}:item)
+                }
             default:
                 return state;
         }
@@ -32,8 +49,38 @@ export const CatagoriesProvider=({children})=>{
         fullVideoList:[],
         videosByCatagory:[],
         currentCatagoryId:null,
-        selectedVideo:null
+        selectedVideo:null,
+        playlists:[]
     });
+
+    const addVideoToPlaylist=async(selectedVideo,playlist)=>{
+        const data=await axios.post("/api/add-video-to-playlist",{
+            video:selectedVideo,
+            playlistid:playlist.id
+        })
+        if(+data.status===201){
+            console.log(data)
+            dispatch({
+                type:"VIDEO_ADDED_TO_PLAYLIST",
+                payload:{
+                    playlist:playlist,
+                    video:selectedVideo
+                }
+            })
+        }
+    }
+
+    const addNewPlaylist=async (newPlayListName)=>{
+        const {data,status}=await axios.post("/api/add-new-playlist",{
+            name:newPlayListName
+        })
+        if(+status===201){
+            dispatch({
+                type:"ADD_NEWPLAYLIST",
+                payload:data.playList
+            })
+        }
+    }
 
     const getFilteredData=(videoList,id)=>{
         if(id)
@@ -47,10 +94,22 @@ export const CatagoriesProvider=({children})=>{
         (async()=>{
             const {data}=await axios.get("/api/load-all-videos")
             dispatch({
-                type:"ADD_VIDEOS_TO_LIST",
+                type:"CREATE_VIDEOLIST",
                 payload:[...data.fullVideosLists]
             })
         })()
+    },[])
+
+    useEffect(()=>{
+        (
+            async()=>{
+                const {data}=await axios.get("/api/load-all-playlists")
+                dispatch({
+                    type:"CREATE_PLAYLIST",
+                    payload:[...data.playLists]
+                })
+            }
+        )()
     },[])
 
     return(
@@ -58,7 +117,10 @@ export const CatagoriesProvider=({children})=>{
             value={{
                 dispatch:dispatch,
                 videosByCatagory:filteredData,
-                selectedVideo:state.selectedVideo
+                selectedVideo:state.selectedVideo,
+                addVideoToPlaylist:addVideoToPlaylist,
+                playlists:state.playlists,
+                addNewPlaylist:addNewPlaylist
             }}
         >
             {children}

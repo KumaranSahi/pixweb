@@ -74,6 +74,12 @@
     font-size: 1.5rem;
 }
 
+.add-new-playlist button{
+    border: 0;
+    background-color: inherit;
+    cursor: pointer;
+}
+
 .textbox{
     padding: 0.5rem;
     outline: 0px;
@@ -92,6 +98,13 @@
 
 .description p{
     font-weight: 200;
+}
+
+.video-active{
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media (min-width:700px){

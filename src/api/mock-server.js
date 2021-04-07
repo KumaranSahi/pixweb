@@ -42,6 +42,7 @@ export const PixWebServer=()=>{
             this.timing = 1000;
             this.get("/load-all-videos", schema=>schema.fullVideosLists.all());
             this.get("/load-all-playlists",  schema=>schema.playLists.all());
+            
             this.post("/add-new-playlist", (schema,request)=>{
                 let data = JSON.parse(request.requestBody)
                 return schema.playLists.create({
@@ -49,6 +50,13 @@ export const PixWebServer=()=>{
                     videos:[],
                     id:faker.datatype.uuid()
                 })
+            })
+
+            this.post("/add-video-to-playlist", (schema,request)=>{
+                let {playlistid,video:newVideo} = JSON.parse(request.requestBody)
+                schema.playLists.find(playlistid).update({videos:[...schema.playLists.find(playlistid).attrs.videos,newVideo]})
+                schema.fullVideosLists.find(newVideo.id).update({playlist:playlistid})
+                return new Response()
             })
         }
     })

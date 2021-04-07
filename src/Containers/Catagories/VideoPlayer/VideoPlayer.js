@@ -2,43 +2,24 @@ import classes from './VideoPlayer.module.css'
 import Youtube from 'react-youtube'
 import {useContext,useState} from 'react'
 import {CatagoriesContext} from '../../../Store/Catagories-context-reducer'
-import axios from 'axios';
-import { useEffect } from 'react/cjs/react.development';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import {faPlusCircle,faCheck} from '@fortawesome/free-solid-svg-icons';
 
 const VideoPlayer=()=>{
     const [openPlaylist,setOpenPlaylist]=useState(false)
-    const [playlist,setPlaylist]=useState([])
     const [newPlaylistName,setNewPlaylistName]=useState("")
-    const [newPlaylistAdded,setNewPlaylistAdded]=useState(false)
-    const {selectedVideo}=useContext(CatagoriesContext)
 
-    useEffect(()=>{
-        (
-            async()=>{
-                const {data}=await axios.get("/api/load-all-playlists")
-                setPlaylist([...data.playLists])
-            }
-        )()
-    },[newPlaylistAdded])
+    const {selectedVideo,addVideoToPlaylist,playlists,addNewPlaylist:addNewPlaylistAction}=useContext(CatagoriesContext)
+
+    
 
     const addNewPlaylist=async()=>{
         if(newPlaylistName.length>0){
-            const data=await axios.post("/api/add-new-playlist",{
-                name:newPlaylistName
-            })
-            if(+data.status===201){
-                setNewPlaylistAdded(status=>!status)
-            }
+            addNewPlaylistAction(newPlaylistName)
             setNewPlaylistName("")
         }else{
             alert("Please Enter a Name")
         }
-    }
-
-    const addVideoToPlaylist=async(video)=>{
-        
     }
 
     return(
@@ -66,29 +47,40 @@ const VideoPlayer=()=>{
                     </button>
                     {openPlaylist&&<ul className={classes["watchlist-dropdown"]}>
                         {
-                            playlist.map((item)=>(
+                            playlists.map((item)=>(
                                 <li key={item.id}
-                                    onClick={()=>addVideoToPlaylist(item)}
+                                    onClick={()=>{
+                                        addVideoToPlaylist(selectedVideo,item)
+                                        setOpenPlaylist(status=>!status)
+                                    }}
+                                    className={item.id===selectedVideo.playlist?classes["video-active"]:null}
                                 >
                                     <p>
                                         {item.name}
                                     </p>
+                                    {item.id===selectedVideo.playlist&&<FontAwesomeIcon icon={faCheck}/>}
                                 </li>
                             ))
                         }
                         <li>
-                            <div className={classes["add-new-playlist"]}>
+                            <form className={classes["add-new-playlist"]} onSubmit={(event)=>{
+                                    event.preventDefault()
+                                    addNewPlaylist(newPlaylistName)
+                                }}>
                                 <input type="text" 
                                     className={classes["textbox"]} 
                                     placeholder="Add New Playlist"
                                     value={newPlaylistName}
                                     onChange={event=>setNewPlaylistName(event.target.value)}
                                 />
-                                <FontAwesomeIcon
-                                    icon={faPlusCircle}
-                                    onClick={addNewPlaylist}
-                                />
-                            </div>
+                                <button
+                                    type="submit"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faPlusCircle}
+                                    />
+                                </button>
+                            </form>
                         </li>
                     </ul>}
                 </div>
