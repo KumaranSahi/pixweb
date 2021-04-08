@@ -7,13 +7,14 @@
 
 .playlist-list h2{
     font-weight: 300;
+    margin-top: 2rem;
 }
 
 .videolist-item{
     width: 20rem;
     height: 15rem;
     margin: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .videolist-item img{

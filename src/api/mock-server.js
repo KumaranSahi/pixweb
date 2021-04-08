@@ -54,9 +54,16 @@ export const PixWebServer=()=>{
 
             this.post("/add-video-to-playlist", (schema,request)=>{
                 let {playlistid,video:newVideo} = JSON.parse(request.requestBody)
+                newVideo.playlist && schema.playLists.find(newVideo.playlist).update({videos:schema.playLists.find(newVideo.playlist).attrs.videos.length>0?schema.playLists.find(newVideo.playlist).attrs.videos.filter(video=>video.id!==newVideo.id):[]})
                 schema.playLists.find(playlistid).update({videos:[...schema.playLists.find(playlistid).attrs.videos,newVideo]})
                 schema.fullVideosLists.find(newVideo.id).update({playlist:playlistid})
                 return new Response()
+            })
+
+            this.post("/remove-video-from-playlist",(schema,request)=>{
+                let {playlistid,video} = JSON.parse(request.requestBody)
+                schema.fullVideosLists.find(video.id).update({playlist:null})
+                schema.playLists.find(playlistid).update({videos:schema.playLists.find(playlistid).attrs.videos.filter(playlistVideo=>playlistVideo.id!==video.id)})
             })
         }
     })

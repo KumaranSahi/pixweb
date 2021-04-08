@@ -8,7 +8,7 @@ const PlaylistPage=()=>{
     return(
         <div className={classes["playlist-container"]}>
             <h1>
-                My Playlists:
+                Playlists:
             </h1>
             <ul className={classes["list-of-playlists"]}>
                 {
@@ -18,6 +18,7 @@ const PlaylistPage=()=>{
                                 name={name}
                                 videos={videos}
                             />
+                            <hr/>
                         </li>
                     ))
                 }

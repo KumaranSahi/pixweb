@@ -12,6 +12,10 @@
     margin-bottom: 10rem;
 }
 
+.list-of-playlists hr{
+    margin-top: 5rem;
+}
+
 @media (min-width:700px){
     .playlist-container{
         margin-top: 123px;

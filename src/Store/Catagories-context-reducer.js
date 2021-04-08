@@ -36,9 +36,16 @@ export const CatagoriesProvider=({children})=>{
             case "VIDEO_ADDED_TO_PLAYLIST":
                 return{
                     ...state,
+                    playlists:state.playlists.map(item=>item.id===action.payload.playlist.id?{...item,videos:[...item.videos,action.payload.video]}:{...item,videos:item.videos.filter(video=>video.id!==action.payload.video.id)}),
                     selectedVideo:{...state.selectedVideo,playlist:action.payload.playlist.id},
                     fullVideoList:state.fullVideoList.map(item=>item.id===action.payload.video.id?{...item,playlist:action.payload.playlist.id}:item),
-                    playlists:state.playlists.map(item=>item.id===action.payload.playlist.id?{...item,videos:[...item.videos,action.payload.video]}:item)
+                }
+            case "VIDEO_REMOVED_FROM_PLAYLIST":
+                return{
+                    ...state,
+                    playlists:state.playlists.map(item=>action.payload.playlist.id?{...item,videos:item.videos.filter(video=>video.id!==action.payload.video.id)}:item),
+                    selectedVideo:{...state.selectedVideo,playlist:null},
+                    fullVideoList:state.fullVideoList.map(item=>item.id===action.payload.video.id?{...item,playlist:null}:item),
                 }
             default:
                 return state;
@@ -54,18 +61,34 @@ export const CatagoriesProvider=({children})=>{
     });
 
     const addVideoToPlaylist=async(selectedVideo,playlist)=>{
-        const data=await axios.post("/api/add-video-to-playlist",{
-            video:selectedVideo,
-            playlistid:playlist.id
-        })
-        if(+data.status===201){
-            dispatch({
-                type:"VIDEO_ADDED_TO_PLAYLIST",
-                payload:{
-                    playlist:playlist,
-                    video:selectedVideo
-                }
+        if(!selectedVideo.playlist||(selectedVideo.playlist&&selectedVideo.playlist!==playlist.id)){
+            const data=await axios.post("/api/add-video-to-playlist",{
+                video:selectedVideo,
+                playlistid:playlist.id
             })
+            if(+data.status===201){
+                dispatch({
+                    type:"VIDEO_ADDED_TO_PLAYLIST",
+                    payload:{
+                        playlist:playlist,
+                        video:selectedVideo
+                    }
+                })
+            }
+        }else if(selectedVideo.playlist&&selectedVideo.playlist===playlist.id){
+            const data=await axios.post("/api/remove-video-from-playlist",{
+                video:selectedVideo,
+                playlistid:playlist.id
+            })
+            if(+data.status===201){
+                dispatch({
+                    type:"VIDEO_REMOVED_FROM_PLAYLIST",
+                    payload:{
+                        playlist:playlist,
+                        video:selectedVideo
+                    }
+                })
+            }
         }
     }
 
