@@ -64,6 +64,16 @@ export const PixWebServer=()=>{
                 let {playlistid,video} = JSON.parse(request.requestBody)
                 schema.fullVideosLists.find(video.id).update({playlist:null})
                 schema.playLists.find(playlistid).update({videos:schema.playLists.find(playlistid).attrs.videos.filter(playlistVideo=>playlistVideo.id!==video.id)})
+                return new Response()
+            })
+
+            this.delete("/delete-playlist",(schema,request)=>{
+                let {queryParams}=request;
+                schema.playLists.find(queryParams["0"]).attrs.videos.forEach(({id})=>{
+                    schema.fullVideosLists.find(id).update({playlist:null})
+                })
+                schema.playLists.find(queryParams["0"]).destroy()
+                return new Response()
             })
         }
     })

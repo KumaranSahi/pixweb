@@ -1,28 +1,45 @@
 import classes from './PlaylistList.module.css'
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+import {CatagoriesContext} from '../../../Store/Catagories-context-reducer'
+import {useContext} from 'react'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
-const PlaylistList=({name,videos})=>{
+const PlaylistList=({name,videos,id})=>{
+    const {push}=useHistory();
+    const {dispatch,deletePlaylist}=useContext(CatagoriesContext)
+    
     return(
         <div className={classes["playlist-list"]}>
             <h2>
                 {name}
+                <FontAwesomeIcon
+                    icon={faTrash}
+                    className={classes["delete-playlist"]}
+                    onClick={()=>deletePlaylist(id)}
+                />
             </h2>
             <ul className={classes["playlist-videolist"]}>
                 {
-                    videos.map(({id,name,link,author})=>(
-                        <li key={id} className={classes["videolist-item"]}>
-                            <Link to="/video-player">
-                                <img
-                                    src={`https://img.youtube.com/vi/${link}/0.jpg`}
-                                    alt="thumbnail"
-                                />
-                                <h3>
-                                    {name}
-                                </h3>
-                                <p>
-                                    {author}
-                                </p>
-                            </Link>
+                    videos.map(video=>(
+                        <li key={video.id} className={classes["videolist-item"]}>
+                            <img
+                                src={`https://img.youtube.com/vi/${video.link}/0.jpg`}
+                                alt="thumbnail"
+                                onClick={()=>{
+                                    dispatch({
+                                        type:"SELECT_VIDEO",
+                                        payload:{...video}
+                                    })
+                                    push("/video-player")
+                                }}
+                            />
+                            <h3>
+                                {video.name}
+                            </h3>
+                            <p>
+                                {video.author}
+                            </p>
                         </li>
                     ))
                 }

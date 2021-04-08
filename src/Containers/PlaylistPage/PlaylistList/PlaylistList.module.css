@@ -14,7 +14,7 @@
     width: 20rem;
     height: 15rem;
     margin: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 }
 
 .videolist-item img{
@@ -35,4 +35,13 @@
 
 .playlist-videolist{
     list-style: none;
+}
+
+.delete-playlist{
+    cursor: pointer;
+    margin-left: 2rem;
+}
+
+.delete-playlist :hover{
+    color: var(--primary);
 }

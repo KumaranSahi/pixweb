@@ -47,6 +47,12 @@ export const CatagoriesProvider=({children})=>{
                     selectedVideo:{...state.selectedVideo,playlist:null},
                     fullVideoList:state.fullVideoList.map(item=>item.id===action.payload.video.id?{...item,playlist:null}:item),
                 }
+            case "DELETE_PLAYLIST":
+                return{
+                    ...state,
+                    fullVideoList:state.fullVideoList.map(item=>item.playlist===action.payload?{...item,playlist:null}:item),
+                    playlists:state.playlists.filter(({id})=>id!==action.payload)
+                }
             default:
                 return state;
         }
@@ -104,6 +110,16 @@ export const CatagoriesProvider=({children})=>{
         }
     }
 
+    const deletePlaylist=async (playlistid)=>{
+        const {status}=await axios.delete("/api/delete-playlist",{params:playlistid})
+        if(+status===200){
+            dispatch({
+                type:"DELETE_PLAYLIST",
+                payload:playlistid
+            })
+        }
+    }
+
     const getFilteredData=(videoList,id)=>{
         if(id)
             return videoList.filter(item=>item.catagoryId===id)
@@ -142,7 +158,8 @@ export const CatagoriesProvider=({children})=>{
                 selectedVideo:state.selectedVideo,
                 addVideoToPlaylist:addVideoToPlaylist,
                 playlists:state.playlists,
-                addNewPlaylist:addNewPlaylist
+                addNewPlaylist:addNewPlaylist,
+                deletePlaylist:deletePlaylist
             }}
         >
             {children}

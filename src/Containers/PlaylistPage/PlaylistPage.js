@@ -15,10 +15,11 @@ const PlaylistPage=()=>{
                     playlists.map(({id,name,videos})=>(
                         <li key={id}>
                             <PlaylistList
+                                id={id}
                                 name={name}
                                 videos={videos}
                             />
-                            <hr/>
+                            {videos.length>0&&<hr/>}
                         </li>
                     ))
                 }
