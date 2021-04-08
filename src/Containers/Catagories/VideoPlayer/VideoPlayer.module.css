@@ -1,5 +1,10 @@
 .video-player{
-    min-height: 150vh;
+    margin-bottom: 25rem;
+}
+
+.video-player-page{
+    margin-bottom: 25rem;
+    margin-top: 8rem;
 }
 
 .youtube-window{
@@ -105,10 +110,4 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-@media (min-width:700px){
-    .video-player{
-        min-height: 80vh;
-    }
 }

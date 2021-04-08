@@ -16,7 +16,6 @@ const Catagories=()=>{
         })
     },[id,dispatch])
 
-
     return(
         <div className={classes["catagory-container"]}>
             <div className={classes["catagory-video-play-area"]}>

@@ -4,6 +4,7 @@ import {useContext,useState} from 'react'
 import {CatagoriesContext} from '../../../Store/Catagories-context-reducer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlusCircle,faCheck} from '@fortawesome/free-solid-svg-icons';
+import {useLocation} from 'react-router-dom'
 
 const VideoPlayer=()=>{
     const [openPlaylist,setOpenPlaylist]=useState(false)
@@ -11,7 +12,6 @@ const VideoPlayer=()=>{
 
     const {selectedVideo,addVideoToPlaylist,playlists,addNewPlaylist:addNewPlaylistAction}=useContext(CatagoriesContext)
 
-    
 
     const addNewPlaylist=async()=>{
         if(newPlaylistName.length>0){
@@ -21,9 +21,9 @@ const VideoPlayer=()=>{
             alert("Please Enter a Name")
         }
     }
-
+    const {pathname}=useLocation();
     return(
-        <div className={classes["video-player"]}>
+        <div className={pathname==="/video-player"? classes["video-player-page"]:classes["video-player"]}>
             <h1 className={classes["video-name"]}>
                 {selectedVideo.name}
             </h1>

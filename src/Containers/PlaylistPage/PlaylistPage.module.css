@@ -1,0 +1,19 @@
+.playlist-container{
+    margin-top: 70px;
+    height: 100%;
+}
+
+.playlist-container h1{
+    font-weight: 300;
+}
+
+.list-of-playlists{
+    list-style: none;
+    margin-bottom: 10rem;
+}
+
+@media (min-width:700px){
+    .playlist-container{
+        margin-top: 123px;
+    }
+}

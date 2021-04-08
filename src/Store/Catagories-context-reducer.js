@@ -38,7 +38,7 @@ export const CatagoriesProvider=({children})=>{
                     ...state,
                     selectedVideo:{...state.selectedVideo,playlist:action.payload.playlist.id},
                     fullVideoList:state.fullVideoList.map(item=>item.id===action.payload.video.id?{...item,playlist:action.payload.playlist.id}:item),
-                    playlists:state.playlists.map(item=>item.id===action.payload.playlist.id?{...item,videos:[...item.videos,action.payload.video.id]}:item)
+                    playlists:state.playlists.map(item=>item.id===action.payload.playlist.id?{...item,videos:[...item.videos,action.payload.video]}:item)
                 }
             default:
                 return state;
@@ -59,7 +59,6 @@ export const CatagoriesProvider=({children})=>{
             playlistid:playlist.id
         })
         if(+data.status===201){
-            console.log(data)
             dispatch({
                 type:"VIDEO_ADDED_TO_PLAYLIST",
                 payload:{
