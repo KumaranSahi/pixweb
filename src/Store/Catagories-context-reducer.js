@@ -76,7 +76,6 @@ export const CatagoriesProvider=({children})=>{
 
     const [state,dispatch]=useReducer(catagoriesManipulation,{
         fullVideoList:[],
-        videosByCatagory:[],
         currentCatagoryId:null,
         selectedVideo:null,
         playlists:[],
