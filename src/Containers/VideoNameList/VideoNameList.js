@@ -7,7 +7,7 @@ const VideoNameList=({closeDropDown})=>{
     return(
         <ul className={classes["video-name-list"]}>
             {
-                videosByCatagory.map((item)=>(
+                videosByCatagory&&videosByCatagory.map((item)=>(
                     <li key={item.id}
                         onClick={()=>{dispatch({
                             type:"SELECT_VIDEO",
