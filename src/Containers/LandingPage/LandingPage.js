@@ -7,6 +7,7 @@ import {CatagoriesContext} from '../../Store/Catagories-context-reducer'
 import PlaylistPage from '../PlaylistPage/PlaylistPage'
 import {useEffect,useContext} from 'react'
 import VideoPlayer from '../Catagories/VideoPlayer/VideoPlayer'
+import HistoryPage from '../History/History'
 
 const VideoPlayerRoute=({...props})=>{
     const {selectedVideo}=useContext(CatagoriesContext)
@@ -29,6 +30,7 @@ const LandingPage=()=>{
                 <Route path="/catagory/:id" component={Catagories}/>
                 <Route path="/my-playlist" component={PlaylistPage}/>
                 <VideoPlayerRoute path="/video-player" component={VideoPlayer}/>
+                <HistoryPage path="/history" component={HistoryPage}/>
                 <Route path="/" component={HomePage}/>
             </Switch>
             <MobileNavBar/>
