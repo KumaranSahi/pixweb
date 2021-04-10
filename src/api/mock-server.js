@@ -28,6 +28,7 @@ export const PixWebServer=()=>{
                     catagoryId:catagoryId,
                     author:author,
                     playlist:null,
+                    notes:[],
                     description:faker.commerce.productDescription(),
                     recomended:faker.datatype.boolean()
                 })
@@ -96,6 +97,19 @@ export const PixWebServer=()=>{
                 let {newVideo} = JSON.parse(request.requestBody)
                 schema.histories.create(newVideo)
                 return schema.histories.all()
+            })
+
+            this.post("/add-note-to-video",(schema,request)=>{
+                let {videoId,note}=JSON.parse(request.requestBody)
+                schema.fullVideosLists.find(videoId).update({notes:[...schema.fullVideosLists.find(videoId).attrs.notes,note]})
+                schema.histories.find(videoId).update({notes:[...schema.histories.find(videoId).attrs.notes,note]})
+                let playlistId=schema.fullVideosLists.find(videoId).attrs.playlist;
+                playlistId && schema.playLists.find(playlistId).update({videos:schema.playLists.find(playlistId).attrs.videos.map(item=>item.id===videoId?{...item,notes:[...item.notes,note]}:item)})
+                return ({
+                    fullVideosList:schema.fullVideosLists.all(),
+                    playlist:schema.playLists.all(),
+                    history:schema.histories.all()
+                })
             })
         }
     })

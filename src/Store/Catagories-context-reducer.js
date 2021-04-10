@@ -61,6 +61,14 @@ export const CatagoriesProvider=({children})=>{
                     ...state,
                     history:[...action.payload]
                 }
+            case "ADD_NOTES_TO_VIDEO":
+                return{
+                    ...state,
+                    playlists:[...action.payload.playlist],
+                    fullVideoList:[...action.payload.fullVideosList],
+                    history:[...action.payload.history],
+                    selectedVideo:{...state.selectedVideo,notes:[...state.selectedVideo.notes,action.payload.note]}
+                }
             default:
                 return state;
         }
@@ -138,6 +146,23 @@ export const CatagoriesProvider=({children})=>{
         }
     }
 
+    const addNotes=async (videoId,note)=>{
+        const {status,data}=await axios.post("/api/add-note-to-video",{
+            videoId,note
+        })
+        if(+status===201){
+            dispatch({
+                type:"ADD_NOTES_TO_VIDEO",
+                payload:{
+                    playlist:[...data.playlist.models],
+                    fullVideosList:[...data.fullVideosList.models],
+                    history:[...data.history.models],
+                    note:note
+                }
+            })
+        }
+    }
+
     const getFilteredData=(videoList,id)=>{
         if(id)
             return videoList.filter(item=>item.catagoryId===id)
@@ -194,7 +219,8 @@ export const CatagoriesProvider=({children})=>{
                 playlists:state.playlists,
                 addNewPlaylist:addNewPlaylist,
                 deletePlaylist:deletePlaylist,
-                history:state.history
+                history:state.history,
+                addNotes:addNotes
             }}
         >
             {children}

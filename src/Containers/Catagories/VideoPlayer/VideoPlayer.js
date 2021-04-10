@@ -5,12 +5,14 @@ import {CatagoriesContext} from '../../../Store/Catagories-context-reducer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlusCircle,faCheck} from '@fortawesome/free-solid-svg-icons';
 import {useLocation} from 'react-router-dom'
+import Notes from './Notes/Notes'
 
 const VideoPlayer=()=>{
     const [openPlaylist,setOpenPlaylist]=useState(false)
     const [newPlaylistName,setNewPlaylistName]=useState("")
+    const [note,setNote]=useState("")
 
-    const {selectedVideo,addVideoToPlaylist,playlists,addNewPlaylist:addNewPlaylistAction}=useContext(CatagoriesContext)
+    const {selectedVideo,addVideoToPlaylist,playlists,addNewPlaylist:addNewPlaylistAction,addNotes}=useContext(CatagoriesContext)
 
 
     const addNewPlaylist=async()=>{
@@ -30,7 +32,6 @@ const VideoPlayer=()=>{
             <Youtube
                 videoId={selectedVideo.link}
                 className={classes["youtube-window"]}
-                onPause={event=>console.log(event.target.playerInfo.currentTime)}
             />
             <div className={classes["options-bar"]}>
                 <h2>
@@ -92,6 +93,54 @@ const VideoPlayer=()=>{
                 <p>
                     {selectedVideo.description}
                 </p>
+            </div>
+            <hr/>
+            <div className={classes["notes"]}>
+                <h2>
+                    Notes:
+                </h2>
+                <form 
+                    className={classes["add-note"]}
+                    onSubmit={event=>{
+                        event.preventDefault();
+                        addNotes(selectedVideo.id,{
+                            name:"Random Name",
+                            note:note
+                        })
+                        setNote("")
+                    }}
+                    >
+                    <label>
+                        <p>
+                            Add note:
+                        </p>
+                        <div>
+                            <input 
+                                placeholder="Add a note"
+                                value={note}
+                                onChange={event=>setNote(event.target.value)}
+                            />
+                            <button 
+                                type="submit"
+                                className={`${classes["button-solid"]} ${classes["button-solid-primary"]}`}>
+                                Add Note
+                            </button>
+                        </div>
+                    </label>
+                </form>
+                <ul className={classes["notes-list"]}>
+                    {
+                        selectedVideo.notes&&selectedVideo.notes.map(({name,note})=>(
+                            <li key={`${Math.random()}${name}${note}`}>
+                                <Notes 
+                                    name={name}
+                                    note={note}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
+                
             </div>
         </div>
     )

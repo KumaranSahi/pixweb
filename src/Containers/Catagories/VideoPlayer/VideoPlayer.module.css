@@ -19,7 +19,7 @@
     align-items: center;
 }
 
-.options-bar h2{
+.options-bar h2, .notes h2{
     margin: 0px;
     font-weight: 200;
 }
@@ -110,4 +110,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.notes-list{
+    list-style: none;
+}
+
+.add-note input{
+    width: 80%;
+    border: 0;
+    border-bottom: 1px solid var(--neutral-mild);
+    padding: 0.5rem;
+    padding-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.add-note div{
+    display: flex;
+    align-items: center;
+}
+
+.button-solid{
+    color: var(--white);
+    outline: none;
+    border: 0px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.button-solid-primary{
+    background-color: var(--primary);
 }
