@@ -58,23 +58,38 @@ export const PixWebServer=()=>{
                 newVideo.playlist && schema.playLists.find(newVideo.playlist).update({videos:schema.playLists.find(newVideo.playlist).attrs.videos.length>0?schema.playLists.find(newVideo.playlist).attrs.videos.filter(video=>video.id!==newVideo.id):[]})
                 schema.playLists.find(playlistid).update({videos:[...schema.playLists.find(playlistid).attrs.videos,newVideo]})
                 schema.fullVideosLists.find(newVideo.id).update({playlist:playlistid})
-                return new Response()
+                schema.histories.find(newVideo.id).update({playlist:playlistid})
+                return ({
+                    fullVideosList:schema.fullVideosLists.all(),
+                    playlist:schema.playLists.all(),
+                    history:schema.histories.all()
+                })
             })
 
             this.post("/remove-video-from-playlist",(schema,request)=>{
                 let {playlistid,video} = JSON.parse(request.requestBody)
                 schema.fullVideosLists.find(video.id).update({playlist:null})
                 schema.playLists.find(playlistid).update({videos:schema.playLists.find(playlistid).attrs.videos.filter(playlistVideo=>playlistVideo.id!==video.id)})
-                return new Response()
+                schema.histories.find(video.id).update({playlist:null})
+                return ({
+                    fullVideosList:schema.fullVideosLists.all(),
+                    playlist:schema.playLists.all(),
+                    history:schema.histories.all()
+                })
             })
 
             this.delete("/delete-playlist",(schema,request)=>{
                 let {queryParams}=request;
                 schema.playLists.find(queryParams["0"]).attrs.videos.forEach(({id})=>{
                     schema.fullVideosLists.find(id).update({playlist:null})
+                    schema.histories.find(id).update({playlist:null})
                 })
                 schema.playLists.find(queryParams["0"]).destroy()
-                return new Response()
+                return ({
+                    fullVideosList:schema.fullVideosLists.all(),
+                    playlist:schema.playLists.all(),
+                    history:schema.histories.all()
+                })
             })
 
             this.post("/add-video-to-history",(schema,request)=>{
