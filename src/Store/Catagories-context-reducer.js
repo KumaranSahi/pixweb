@@ -53,6 +53,11 @@ export const CatagoriesProvider=({children})=>{
                     fullVideoList:state.fullVideoList.map(item=>item.playlist===action.payload?{...item,playlist:null}:item),
                     playlists:state.playlists.filter(({id})=>id!==action.payload)
                 }
+            case "ADD_TO_HISTORY":
+                return{
+                    ...state,
+                    history:[...action.payload]
+                }
             default:
                 return state;
         }
@@ -63,7 +68,8 @@ export const CatagoriesProvider=({children})=>{
         videosByCatagory:[],
         currentCatagoryId:null,
         selectedVideo:null,
-        playlists:[]
+        playlists:[],
+        history:[]
     });
 
     const addVideoToPlaylist=async(selectedVideo,playlist)=>{
@@ -127,6 +133,22 @@ export const CatagoriesProvider=({children})=>{
     }
 
     const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
+
+    useEffect(()=>{
+        (async()=>{
+            if(state.selectedVideo){
+                const {data,status}=await axios.post("/api/add-video-to-history",{
+                    newVideo:state.selectedVideo
+                })
+                if(+status===201){
+                    dispatch({
+                        type:"ADD_TO_HISTORY",
+                        payload:[...data.histories]
+                    })
+                }
+            }
+        })()
+    },[state.selectedVideo])
 
     useEffect(()=>{
         (async()=>{

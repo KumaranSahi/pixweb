@@ -12,7 +12,8 @@ export const PixWebServer=()=>{
         },
         models: {
             fullVideosList:Model,
-            playList:Model
+            playList:Model,
+            history:Model
         },
         seeds(server){
             
@@ -74,6 +75,12 @@ export const PixWebServer=()=>{
                 })
                 schema.playLists.find(queryParams["0"]).destroy()
                 return new Response()
+            })
+
+            this.post("/add-video-to-history",(schema,request)=>{
+                let {newVideo} = JSON.parse(request.requestBody)
+                schema.histories.create(newVideo)
+                return schema.histories.all()
             })
         }
     })
