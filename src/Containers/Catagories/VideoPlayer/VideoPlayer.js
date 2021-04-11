@@ -23,14 +23,6 @@ const VideoPlayer=()=>{
             alert("Please Enter a Name")
         }
     }
-    const opts = {
-        height: '390',
-        width: '640',
-        playerVars: {
-          // https://developers.google.com/youtube/player_parameters
-          autoplay: 1,
-        },
-      };
 
     const {pathname}=useLocation();
     return(
@@ -41,7 +33,6 @@ const VideoPlayer=()=>{
             <Youtube
                 videoId={selectedVideo.link}
                 className={classes["youtube-window"]}
-                opts={opts}
             />
             <div className={classes["options-bar"]}>
                 <h2>
