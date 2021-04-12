@@ -1,6 +1,6 @@
 import classes from './PlaylistList.module.css'
 import {useHistory} from 'react-router-dom'
-import {CatagoriesContext} from '../../../Store/Catagories-context-reducer'
+import {CatagoriesContext} from '../../../Store/CatagoriesReducer'
 import {useContext} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'

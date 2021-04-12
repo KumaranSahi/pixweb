@@ -1,5 +1,6 @@
 import {createContext, useReducer, useEffect} from 'react';
 import axios from 'axios'
+import {warningToast,successToast,infoToast} from '../UI/Toast/Toast'
 
 export const CatagoriesContext=createContext();
 
@@ -162,6 +163,25 @@ export const CatagoriesProvider=({children})=>{
         }
     }
 
+    const signUpUser=async (userData)=>{
+        try{
+            const {data,status}=await axios.post('/api/users',userData);
+            if(data.ok)
+                successToast("User Added Successfully")
+            else{
+                if(+status===208){
+                    infoToast("User already exists in the pix ecosystem")
+                    infoToast("Please Try loging in")
+                }
+                else
+                    warningToast("Failed to add user")
+            }
+        }catch(error){
+            warningToast("Failed to add user")
+            console.log(error)
+        }
+    }
+
     const getFilteredData=(videoList,id)=>{
         if(id)
             return videoList.filter(item=>item.catagoryId===id)
@@ -188,25 +208,31 @@ export const CatagoriesProvider=({children})=>{
 
     useEffect(()=>{
         (async()=>{
-            const {data}=await axios.get("/api/load-all-videos")
-            dispatch({
-                type:"CREATE_VIDEOLIST",
-                payload:[...data.fullVideosLists]
-            })
+            try{
+            const {data}=await axios.get("/api/videos")
+            if(data.ok){
+                dispatch({
+                    type:"CREATE_VIDEOLIST",
+                    payload:[...data.data]
+                })
+            }
+            }catch(error){
+                console.log(error)
+            }
         })()
     },[])
 
-    useEffect(()=>{
-        (
-            async()=>{
-                const {data}=await axios.get("/api/load-all-playlists")
-                dispatch({
-                    type:"CREATE_PLAYLIST",
-                    payload:[...data.playLists]
-                })
-            }
-        )()
-    },[])
+    // useEffect(()=>{
+    //     (
+    //         async()=>{
+    //             const {data}=await axios.get("/api/load-all-playlists")
+    //             dispatch({
+    //                 type:"CREATE_PLAYLIST",
+    //                 payload:[...data.playLists]
+    //             })
+    //         }
+    //     )()
+    // },[])
 
     return(
         <CatagoriesContext.Provider 
@@ -219,6 +245,7 @@ export const CatagoriesProvider=({children})=>{
                 addNewPlaylist:addNewPlaylist,
                 deletePlaylist:deletePlaylist,
                 history:state.history,
+                signUpUser:signUpUser,
                 addNotes:addNotes
             }}
         >

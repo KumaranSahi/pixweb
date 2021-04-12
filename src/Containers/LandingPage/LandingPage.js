@@ -3,11 +3,12 @@ import MobileNavBar from './NavBar/MobileNavBar/MobileNavBar'
 import HomePage from '../HomePage/HomePage'
 import {Redirect, Route,Switch,useLocation} from 'react-router-dom'
 import Catagories from '../Catagories/Catagories'
-import {CatagoriesContext} from '../../Store/Catagories-context-reducer'
+import {CatagoriesContext} from '../../Store/CatagoriesReducer'
 import PlaylistPage from '../PlaylistPage/PlaylistPage'
 import {useEffect,useContext} from 'react'
 import VideoPlayer from '../Catagories/VideoPlayer/VideoPlayer'
 import HistoryPage from '../History/History'
+import LoginPage from '../LoginPage/LoginPage'
 
 const VideoPlayerRoute=({...props})=>{
     const {selectedVideo}=useContext(CatagoriesContext)
@@ -30,7 +31,8 @@ const LandingPage=()=>{
                 <Route path="/catagory/:id" component={Catagories}/>
                 <Route path="/my-playlist" component={PlaylistPage}/>
                 <VideoPlayerRoute path="/video-player" component={VideoPlayer}/>
-                <HistoryPage path="/history" component={HistoryPage}/>
+                <Route path="/history" component={HistoryPage}/>
+                <Route path="/login" component={LoginPage}/>
                 <Route path="/" component={HomePage}/>
             </Switch>
             <MobileNavBar/>

@@ -1,6 +1,6 @@
 import classes from './PlaylistPage.module.css';
 import {useContext} from 'react'
-import {CatagoriesContext} from '../../Store/Catagories-context-reducer'
+import {CatagoriesContext} from '../../Store/CatagoriesReducer'
 import PlaylistList from './PlaylistList/PlaylistList';
 
 const PlaylistPage=()=>{

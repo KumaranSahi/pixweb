@@ -1,6 +1,6 @@
 import classes from './History.module.css'
 import {useContext} from 'react'
-import {CatagoriesContext} from '../../Store/Catagories-context-reducer'
+import {CatagoriesContext} from '../../Store/CatagoriesReducer'
 import {useHistory} from 'react-router-dom'
 
 const History=()=>{
