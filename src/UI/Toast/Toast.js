@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheck,faInfo,faExclamation} from '@fortawesome/free-solid-svg-icons'
 
 const attributes={
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_RIGHT,
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,

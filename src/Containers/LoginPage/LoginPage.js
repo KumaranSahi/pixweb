@@ -1,10 +1,13 @@
 import classes from './LoginPage.module.css';
 import {useState,useContext} from 'react'
 import {CatagoriesContext} from '../../Store/CatagoriesReducer'
+import { warningToast } from '../../UI/Toast/Toast';
 
 const LoginPage=()=>{
 
     const {signUpUser}=useContext(CatagoriesContext)
+
+    const [currentPage,setCurrentPage]=useState("SIGNIN_PAGE")
 
     const [userName,setUserName]=useState("")
     const [userNameValid,setUserNameValid]=useState(true)
@@ -13,6 +16,7 @@ const LoginPage=()=>{
     const [emailValid,setEmailValid]=useState(true)
 
     const [password,setPassword]=useState("")
+    const [confirmPassword,setConfirmPassword]=useState("")
 
     const validateUserName=()=>{
         if(userName.length===0)
@@ -40,18 +44,27 @@ const LoginPage=()=>{
             })
         }
     }
-    
-    return(
-        <div className={classes["login-container"]}>
-            <img
-                src="https://res.cloudinary.com/docpuxue8/image/upload/v1618250089/PixWeb/LoginPageBackground_fww2yn.jpg"
-                alt="login"
-                className={classes["login-image"]}
-            />
-            <div className={classes["login"]}>
-                <div className={classes["signin-signup-container"]}>
+
+    const signInSubmit=async (event)=>{
+        event.preventDefault();
+        validateEmail();
+    }
+
+    const changePasswordSubmit=async (event)=>{
+        event.preventDefault();
+        if(password===confirmPassword){
+
+        }else{
+            warningToast("Passwords do not match")
+        }
+    }
+
+    const pageToRender=()=>{
+        if(currentPage==="SIGNUP_PAGE"){
+            return(
+                <>
                     <h1>
-                        Sign In:
+                        Sign Up:
                     </h1>
                     <form 
                         className={classes["signup-container"]}
@@ -68,7 +81,7 @@ const LoginPage=()=>{
                             {!userNameValid&&<p className={classes["error-text"]}>Please enter a valid user name</p>}
                         </div>
                         <div>
-                            <input type="text" 
+                            <input type="email" 
                                 className={classes["textbox"]} 
                                 placeholder="Email"
                                 required
@@ -92,6 +105,96 @@ const LoginPage=()=>{
                             Sign up!
                         </button>
                     </form>
+                </>
+            )
+        }else if(currentPage==="SIGNIN_PAGE"){
+            return(
+                <>
+                    <h1>
+                        Sign In:
+                    </h1>
+                    <form 
+                        className={classes["signup-container"]}
+                        onSubmit={signInSubmit}
+                    >
+                        <div>
+                            <input type="email" 
+                                className={classes["textbox"]} 
+                                placeholder="Email"
+                                required
+                                value={email}
+                                onChange={event=>setEmail(event.target.value)}
+                            />
+                            {!emailValid&&<p className={classes["error-text"]}>Please enter a valid email</p>}
+                        </div>
+                        <input 
+                            type="password" 
+                            className={classes["textbox"]} 
+                            placeholder="Password"
+                            required
+                            value={password}
+                            onChange={event=>setPassword(event.target.value)}
+                        />
+                        <button 
+                            type="submit"
+                            className={`${classes["button-solid"]} ${classes["button-primary"]}`}    
+                        >
+                            Sign In
+                        </button>
+                    </form>
+                </>
+            )
+        }else if(currentPage==="CHANGE_PASSWORD"){
+            return(
+                <>
+                    <h1>
+                        Sign In:
+                    </h1>
+                    <form 
+                        className={classes["signup-container"]}
+                        onSubmit={changePasswordSubmit}
+                    >
+                        <input 
+                            type="password" 
+                            className={classes["textbox"]} 
+                            placeholder="Password"
+                            required
+                            value={password}
+                            onChange={event=>setPassword(event.target.value)}
+                        />
+                        <input 
+                            type="password" 
+                            className={classes["textbox"]} 
+                            placeholder="Confirm Password"
+                            required
+                            value={confirmPassword}
+                            onChange={event=>setConfirmPassword(event.target.value)}
+                        />
+                        <button 
+                            type="submit"
+                            className={`${classes["button-solid"]} ${classes["button-primary"]}`}    
+                        >
+                            Change Password
+                        </button>
+                    </form>
+                </>
+            )
+        }
+    }
+    
+    return(
+        <div className={classes["login-container"]}>
+            <img
+                src="https://res.cloudinary.com/docpuxue8/image/upload/v1618250089/PixWeb/LoginPageBackground_fww2yn.jpg"
+                alt="login"
+                className={classes["login-image"]}
+            />
+            <div className={classes["login"]}>
+                <div className={classes["signin-signup-container"]}>
+                    {pageToRender()}
+                    {currentPage==="SIGNIN_PAGE"&&<p className={classes["switch-page"]} onClick={()=>setCurrentPage("CHANGE_PASSWORD")}>Forget Password</p>}
+                    {currentPage==="SIGNIN_PAGE"?<p className={classes["switch-page"]} onClick={()=>setCurrentPage("SIGNUP_PAGE")}>New to Pix? Sign up!</p>:
+                        <p className={classes["switch-page"]} onClick={()=>setCurrentPage("SIGNIN_PAGE")}>Already have an Account? Sign In!</p>}
                 </div>
             </div>
         </div>
