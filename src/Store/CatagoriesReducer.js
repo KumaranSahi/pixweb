@@ -1,6 +1,5 @@
 import {createContext, useReducer, useEffect} from 'react';
 import axios from 'axios'
-import {warningToast,successToast,infoToast} from '../UI/Toast/Toast'
 
 export const CatagoriesContext=createContext();
 
@@ -163,24 +162,7 @@ export const CatagoriesProvider=({children})=>{
         }
     }
 
-    const signUpUser=async (userData)=>{
-        try{
-            const {data,status}=await axios.post('/api/users',userData);
-            if(data.ok)
-                successToast("User Added Successfully")
-            else{
-                if(+status===208){
-                    infoToast("User already exists in the pix ecosystem")
-                    infoToast("Please Try loging in")
-                }
-                else
-                    warningToast("Failed to add user")
-            }
-        }catch(error){
-            warningToast("Failed to add user")
-            console.log(error)
-        }
-    }
+    
 
     const getFilteredData=(videoList,id)=>{
         if(id)
@@ -245,7 +227,6 @@ export const CatagoriesProvider=({children})=>{
                 addNewPlaylist:addNewPlaylist,
                 deletePlaylist:deletePlaylist,
                 history:state.history,
-                signUpUser:signUpUser,
                 addNotes:addNotes
             }}
         >

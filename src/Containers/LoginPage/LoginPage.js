@@ -1,13 +1,11 @@
 import classes from './LoginPage.module.css';
 import {useState,useContext} from 'react'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
+import {AuthContext} from '../../Store/AuthReducer'
 import { warningToast } from '../../UI/Toast/Toast';
 
 const LoginPage=()=>{
 
-    const {signUpUser}=useContext(CatagoriesContext)
-
-    const [currentPage,setCurrentPage]=useState("SIGNIN_PAGE")
+    const {signUpUser,signInUser,currentPage,setCurrentPage}=useContext(AuthContext)
 
     const [userName,setUserName]=useState("")
     const [userNameValid,setUserNameValid]=useState(true)
@@ -48,10 +46,16 @@ const LoginPage=()=>{
     const signInSubmit=async (event)=>{
         event.preventDefault();
         validateEmail();
+        if(emailValid)
+            signInUser({
+                email:email,
+                password:password
+            })
     }
 
     const changePasswordSubmit=async (event)=>{
         event.preventDefault();
+        validateEmail();
         if(password===confirmPassword){
 
         }else{
@@ -154,6 +158,13 @@ const LoginPage=()=>{
                         className={classes["signup-container"]}
                         onSubmit={changePasswordSubmit}
                     >
+                        <input type="email" 
+                                className={classes["textbox"]} 
+                                placeholder="Email"
+                                required
+                                value={email}
+                                onChange={event=>setEmail(event.target.value)}
+                            />
                         <input 
                             type="password" 
                             className={classes["textbox"]} 
