@@ -1,10 +1,14 @@
 import {useReducer,createContext,useState,useEffect} from 'react';
 import {warningToast,successToast,infoToast} from '../UI/Toast/Toast'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
 
 export const AuthContext=createContext()
 
 export const AuthProvider=({children})=>{
+    
+    const {push}=useHistory();
+
     const authManipulation=(state,action)=>{
         switch (action.type) {
             case "SIGNIN_USER":
@@ -85,8 +89,8 @@ export const AuthProvider=({children})=>{
                         expiresIn:expiresIn
                     }
                 })
-                successToast("User Added Successfully")
-                setCurrentPage("SIGNIN_PAGE")
+                successToast("User Logged in Successfully")
+                push("/")
             }
         }catch(error){
             warningToast("Invalid username or password")
@@ -130,6 +134,19 @@ export const AuthProvider=({children})=>{
         }
     }
 
+    const changePassword=async (userData)=>{
+        try{
+            const {data}=await axios.post('/api/users/password',userData);
+            if(data.ok){
+                successToast("Password changed successfully");
+                setCurrentPage("SIGNIN_PAGE");
+            }
+        }catch(error){
+            warningToast("Unable to change password please try again later")
+            console.log(error)
+        }
+    }
+
     useEffect(()=>{
         onReload()
     },[])
@@ -146,6 +163,7 @@ export const AuthProvider=({children})=>{
                 signInUser:signInUser,
                 signOutUser:signOutUser,
                 currentPage:currentPage,
+                changePassword:changePassword,
                 setCurrentPage:setCurrentPage
             }}
         >

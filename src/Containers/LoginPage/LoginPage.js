@@ -5,7 +5,7 @@ import { warningToast } from '../../UI/Toast/Toast';
 
 const LoginPage=()=>{
 
-    const {signUpUser,signInUser,currentPage,setCurrentPage}=useContext(AuthContext)
+    const {signUpUser,signInUser,currentPage,setCurrentPage,changePassword}=useContext(AuthContext)
 
     const [userName,setUserName]=useState("")
     const [userNameValid,setUserNameValid]=useState(true)
@@ -57,7 +57,11 @@ const LoginPage=()=>{
         event.preventDefault();
         validateEmail();
         if(password===confirmPassword){
-
+            changePassword({
+                email:email,
+                password:password,
+                confirmPassword:confirmPassword
+            })
         }else{
             warningToast("Passwords do not match")
         }
@@ -152,7 +156,7 @@ const LoginPage=()=>{
             return(
                 <>
                     <h1>
-                        Sign In:
+                        Change Password:
                     </h1>
                     <form 
                         className={classes["signup-container"]}
