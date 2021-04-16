@@ -31,7 +31,7 @@ export const CatagoriesProvider=({children})=>{
                 return{
                     ...state,
                     currentCatagoryId:action.payload,
-                    selectedVideo:state.fullVideoList.filter(({catagoryId})=>+catagoryId===+action.payload)[0]
+                    selectedVideo:null
                 }
             case "SELECT_VIDEO":
                 return{
@@ -63,6 +63,21 @@ export const CatagoriesProvider=({children})=>{
         playlists:[],
         history:[]
     });
+
+    const selectVideo=async (videoid)=>{
+        try{
+            const {data}=await axios.get(`/api/videos/${videoid}`,config)
+            if(data.ok){
+                dispatch({
+                    type:"SELECT_VIDEO",
+                    payload:data.data
+                })
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Failed to load video")
+        }
+    }
 
     const addVideoToPlaylist=async(selectedVideo,playlist)=>{
         let currentPlaylist=null;
@@ -168,13 +183,6 @@ export const CatagoriesProvider=({children})=>{
 
     
 
-    const getFilteredData=(videoList,id)=>{
-        if(id)
-            return videoList.filter(item=>+item.catagoryId===+id)
-        return []
-    }
-
-    const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
 
     const addToHistory=async (videoId)=>{
         if(state.selectedVideo && token){
@@ -186,10 +194,44 @@ export const CatagoriesProvider=({children})=>{
                 })
             }catch(error){
                 console.log(error)
-                warningToast("Unable to add video to history")
+                warningToast("Failed to add video to history")
             }
         }
     }
+
+    const addLikeToVideo=async (videoId)=>{
+        try{
+            const {data}=await axios.put(`/api/likes/${videoId}/users/${userId}`,null,config)
+            if(data.ok){
+                selectVideo(videoId)
+                successToast("Video liked")
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Failed to add like to video")
+        }
+    }
+
+    const removeLikeFromVideo=async (like)=>{
+        try{
+            const {data}=await axios.delete(`/api/likes/${like._id}`,config)
+            if(data.ok){
+                selectVideo(like.video)
+                successToast("Like removed")
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Failed to remove like from the video")
+        }
+    }
+    
+    const getFilteredData=(videoList,id)=>{
+        if(id)
+            return videoList.filter(item=>+item.catagoryId===+id)
+        return []
+    }
+
+    const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
 
     useEffect(()=>{
         (async()=>{
@@ -253,6 +295,9 @@ export const CatagoriesProvider=({children})=>{
                 playlists:state.playlists,
                 addNewPlaylist:addNewPlaylist,
                 addToHistory:addToHistory,
+                addLikeToVideo:addLikeToVideo,
+                removeLikeFromVideo:removeLikeFromVideo,
+                selectVideo:selectVideo,
                 deletePlaylist:deletePlaylist,
                 history:state.history,
                 addNotes:addNotes

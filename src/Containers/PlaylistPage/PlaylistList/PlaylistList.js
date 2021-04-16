@@ -7,7 +7,7 @@ import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
 const PlaylistList=({name,videos,id})=>{
     const {push}=useHistory();
-    const {dispatch,deletePlaylist}=useContext(CatagoriesContext)
+    const {deletePlaylist,selectVideo}=useContext(CatagoriesContext)
     
     return(
         <div className={classes["playlist-list"]}>
@@ -26,11 +26,7 @@ const PlaylistList=({name,videos,id})=>{
                             <img
                                 src={`https://img.youtube.com/vi/${video.link}/0.jpg`}
                                 alt="thumbnail"
-                                onClick={()=>{
-                                    dispatch({
-                                        type:"SELECT_VIDEO",
-                                        payload:{...video}
-                                    })
+                                onClick={()=>{selectVideo(video._id)
                                     push("/video-player")
                                 }}
                             />

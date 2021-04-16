@@ -34,6 +34,7 @@
     margin: 1rem;
     padding: 0.5rem;
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .button-primary{
@@ -132,6 +133,7 @@
 
 .button-solid{
     color: var(--white);
+    cursor: pointer;
     outline: none;
     border: 0px;
     padding: 0.5rem;

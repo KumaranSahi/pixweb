@@ -5,7 +5,7 @@ import {useHistory} from 'react-router-dom'
 
 const History=()=>{
     const {push}=useHistory();
-    const {dispatch,history}=useContext(CatagoriesContext)
+    const {history,selectVideo}=useContext(CatagoriesContext)
 
     return(<div className={classes["history-container"]}>
         <h1>
@@ -14,15 +14,12 @@ const History=()=>{
         <ul className={classes["history-videolist"]}>
             {
                 history.map(video=>(
-                    <li key={video.id} className={classes["videolist-item"]}>
+                    <li key={video._id} className={classes["videolist-item"]}>
                         <img
                             src={`https://img.youtube.com/vi/${video.link}/0.jpg`}
                             alt="thumbnail"
                             onClick={()=>{
-                                dispatch({
-                                    type:"SELECT_VIDEO",
-                                    payload:{...video}
-                                })
+                                selectVideo(video._id)
                                 push("/video-player")
                             }}
                         />

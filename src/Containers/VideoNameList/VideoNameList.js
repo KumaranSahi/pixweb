@@ -3,16 +3,13 @@ import {CatagoriesContext} from '../../Store/CatagoriesReducer'
 import { useContext } from 'react'
 
 const VideoNameList=({closeDropDown})=>{
-    const {videosByCatagory,dispatch,selectedVideo}=useContext(CatagoriesContext)
+    const {videosByCatagory,selectedVideo,selectVideo}=useContext(CatagoriesContext)
     return(
         <ul className={classes["video-name-list"]}>
             {
                 videosByCatagory&&videosByCatagory.map((item)=>(
                     <li key={item._id}
-                        onClick={()=>{dispatch({
-                            type:"SELECT_VIDEO",
-                            payload:{...item}
-                        })
+                        onClick={()=>{selectVideo(item._id)
                         closeDropDown&&closeDropDown()
                         }}
                         className={selectedVideo&&selectedVideo._id===item._id?classes["video-active"]:null}

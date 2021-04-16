@@ -17,9 +17,9 @@ const VideoPlayer=()=>{
 
     const {selectedVideo,addToHistory,addVideoToPlaylist,
         playlists,addNewPlaylist:addNewPlaylistAction
-        ,addNotes}=useContext(CatagoriesContext)
+        ,addNotes,addLikeToVideo,removeLikeFromVideo}=useContext(CatagoriesContext)
 
-    const {token}=useContext(AuthContext)
+    const {token,userId}=useContext(AuthContext)
 
     const addNewPlaylist=async()=>{
         if(newPlaylistName.length>0){
@@ -48,6 +48,29 @@ const VideoPlayer=()=>{
                     Author: {selectedVideo.author}
                 </h2>
                 <div className={classes["watchlist-dropdown-container"]}>
+                    {selectedVideo.likes.some(item=>item.by===userId)?
+                    <button
+                        className={`${classes["button-solid"]} ${classes["button-solid-primary"]}`}
+                        onClick={()=>{
+                            if(token){
+                                removeLikeFromVideo(selectedVideo.likes.filter(({by})=>by===userId)[0])
+                            }else
+                                push("/login")
+                        }}
+                    >
+                        Liked ({selectedVideo.likes.length})
+                    </button>:<button
+                        className={`${classes["button-outline"]} ${classes["button-primary"]}`}
+                        onClick={()=>{
+                            if(token){
+                                addLikeToVideo(selectedVideo._id)
+                            }else
+                                push("/login")
+                        }}
+                    >
+                        Like ({selectedVideo.likes.length})
+                    </button>
+                    }
                     <button 
                         className={`${classes["button-outline"]} ${classes["button-primary"]}`}
                         onClick={()=>{
