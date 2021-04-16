@@ -59,7 +59,7 @@ const VideoPlayer=()=>{
                     {openPlaylist&&<ul className={classes["watchlist-dropdown"]}>
                         {
                             playlists.map((item)=>(
-                                <li key={item.id}
+                                <li key={item._id}
                                     onClick={()=>{
                                         if(token){
                                             addVideoToPlaylist(selectedVideo,item)
@@ -68,12 +68,12 @@ const VideoPlayer=()=>{
                                             push("/login")
                                         }
                                     }}
-                                    className={item.id===selectedVideo.playlist?classes["video-active"]:null}
+                                    className={item.videos.some(item=>item._id===selectedVideo._id)?classes["video-active"]:null}
                                 >
                                     <p>
                                         {item.name}
                                     </p>
-                                    {item.id===selectedVideo.playlist&&<FontAwesomeIcon icon={faCheck}/>}
+                                    {item.videos.some(item=>item._id===selectedVideo._id)&&<FontAwesomeIcon icon={faCheck}/>}
                                 </li>
                             ))
                         }

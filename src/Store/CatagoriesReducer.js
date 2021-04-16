@@ -1,7 +1,7 @@
 import {createContext, useReducer, useEffect,useContext} from 'react';
 import {AuthContext} from './AuthReducer'
 import axios from 'axios'
-import { warningToast } from '../UI/Toast/Toast';
+import { successToast, warningToast } from '../UI/Toast/Toast';
 
 export const CatagoriesContext=createContext();
 
@@ -26,11 +26,6 @@ export const CatagoriesProvider=({children})=>{
                 return{
                     ...state,
                     playlists:[...action.payload]
-                }
-            case "ADD_NEWPLAYLIST":    
-            return{
-                    ...state,
-                    playlists:[...state.playlists,action.payload]
                 }
             case "FILTER_VIDEO_BY_CATAGORY":
                 return{
@@ -93,51 +88,71 @@ export const CatagoriesProvider=({children})=>{
     });
 
     const addVideoToPlaylist=async(selectedVideo,playlist)=>{
-        if(!selectedVideo.playlist||(selectedVideo.playlist&&selectedVideo.playlist!==playlist.id)){
-            const {data,status}=await axios.post("/api/add-video-to-playlist",{
-                video:selectedVideo,
-                playlistid:playlist.id
-            })
-            if(+status===201){
-                dispatch({
-                    type:"VIDEO_ADDED_TO_PLAYLIST",
-                    payload:{
-                        playlist:[...data.playlist.models],
-                        fullVideosList:[...data.fullVideosList.models],
-                        playlistid:playlist.id,
-                        history:[...data.history.models]
+        let currentPlaylist=null;
+        state.playlists.forEach(playlist=>{
+            if(playlist.videos.some(item=>item._id===selectedVideo._id))
+                currentPlaylist=playlist._id;
+        })
+        
+        try{
+            if(!currentPlaylist){
+                const {data}=await axios.put(`/api/playlists/${playlist._id}/video/${selectedVideo._id}`,null,config)
+                if(data.ok){
+                    successToast("Video added to playlist")
+                    dispatch({
+                        type:"CREATE_PLAYLIST",
+                        payload:state.playlists.map(item=>item._id===data.data._id?data.data:item)
+                    })
+                }
+            }else if(currentPlaylist===playlist._id){
+                const {data}=await axios.delete(`/api/playlists/${playlist._id}/video/${selectedVideo._id}`,config)
+                if(data.ok){
+                    successToast("Video removed from playlist")
+                    dispatch({
+                        type:"CREATE_PLAYLIST",
+                        payload:state.playlists.map(item=>item._id===data.data._id?data.data:item)
+                    })
+                }
+            }else if(currentPlaylist!==playlist.id){
+                const {data}=await axios.delete(`/api/playlists/${currentPlaylist}/video/${selectedVideo._id}`,config)
+                
+                const {data:addVideo}=await axios.put(`/api/playlists/${playlist._id}/video/${selectedVideo._id}`,null,config)
+                    if(addVideo.ok){
+                        successToast("Video added to playlist")
+                        dispatch({
+                            type:"CREATE_PLAYLIST",
+                            payload:state.playlists.map(item=>{
+                                if(item._id===data.data._id)
+                                    return data.data;
+                                else if(item._id===addVideo.data._id)
+                                    return addVideo.data
+                                else
+                                    return item
+                            })
+                        })
                     }
-                })
-            }
-        }else if(selectedVideo.playlist&&selectedVideo.playlist===playlist.id){
-            const {data,status}=await axios.post("/api/remove-video-from-playlist",{
-                video:selectedVideo,
-                playlistid:playlist.id
-            })
-            if(+status===201){
-                console.log(data)
-                dispatch({
-                    type:"VIDEO_REMOVED_FROM_PLAYLIST",
-                    payload:{
-                        playlist:[...data.playlist.models],
-                        fullVideosList:[...data.fullVideosList.models],
-                        playlistid:playlist.id,
-                        history:[...data.history.models]
-                    }
-                })
-            }
+                }
+        }catch(error){
+            console.log(error)
+            warningToast("Unable to add video to playlist")
         }
     }
 
     const addNewPlaylist=async (newPlaylistName)=>{
-        const {data,status}=await axios.post("/api/add-new-playlist",{
-            name:newPlaylistName
-        })
-        if(+status===201){
-            dispatch({
-                type:"ADD_NEWPLAYLIST",
-                payload:data.playList
-            })
+        try{
+            const {data}=await axios.post(`/api/playlists/${userId}`,{
+                name:newPlaylistName
+            },config)
+            if(data.ok){
+                dispatch({
+                    type:"CREATE_PLAYLIST",
+                    payload:[...state.playlists,data.data]
+                })
+                successToast("Playlist added")
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Unable to add playlist")
         }
     }
 
