@@ -12,6 +12,7 @@ const Navbar=()=>{
             <div className={classes["navbar"]}>
                 {pathname.slice(0,9)==="/catagory"&&<Hamburger/>}
                 {pathname.slice(0,9)!=="/catagory"&&<Logo/>}
+                <div className={classes["alignment-div"]}></div>
                 <Avatar/>
             </div>
             <DesktopNavMenu/>

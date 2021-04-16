@@ -106,6 +106,7 @@ export const AuthProvider=({children})=>{
         dispatch({
             type:"SIGNOUT_USER"
         })
+        push("/")
     }
 
     const onReload=()=>{

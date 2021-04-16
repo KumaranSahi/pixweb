@@ -1,30 +1,42 @@
 import classes from './Avatar.module.css';
-import {useContext} from 'react'
+import {useContext, useState} from 'react'
 import {AuthContext} from '../../../../../Store/AuthReducer'
 import profileImage from '../../../../../Assets/profileimage.jpg'
+import {Link,useLocation} from 'react-router-dom'
 
 const Avatar=()=>{
-    const {userName}=useContext(AuthContext)
-    let avatar=null
+    const {userName,signOutUser}=useContext(AuthContext)
 
+    const [openDropdown,setOpenDropdown]=useState(false)
+
+    let avatar=null
+    let {pathname}=useLocation();
     if(userName){
         avatar=(
             <div className={classes["name-avatar-container"]}>
-                <p>Hello, {userName}</p>
+                <p onClick={()=>setOpenDropdown(open=>!open)}>Hello, {userName}</p>
                 <div className={classes["avatar-container"]}>
-                    <img src={profileImage} className={classes["avatar"]}  alt="Active avatar"/>
+                    <img src={profileImage} className={classes["avatar"]}  alt="Active avatar" onClick={()=>setOpenDropdown(open=>!open)}/>
                     <div className={`${classes["avatar-bubble"]} ${classes["bubble-active"]}`}></div>
+                    {openDropdown&&<ul className={classes["signout-dropdown"]}>
+                        <li
+                            onClick={()=>{
+                                signOutUser()
+                                setOpenDropdown(false)
+                            }}
+                        >
+                            Sign out
+                        </li>                        
+                    </ul>}
                 </div>
             </div>
         )
     }else{
-        avatar=(
+        avatar=pathname!=="/login"&&(
             <div className={classes["name-avatar-container"]}>
-                <p>Login</p>
-                <div className={classes["avatar-container"]}>
-                    <img src="https://via.placeholder.com/80" className={classes["avatar"]}  alt="Inactive avatar"/>
-                    <div className={`${classes["avatar-bubble"]} ${classes["bubble-inactive"]}`}></div>
-                </div>
+                <Link to="/login">
+                    Login          
+                </Link>
             </div>
         )
     }

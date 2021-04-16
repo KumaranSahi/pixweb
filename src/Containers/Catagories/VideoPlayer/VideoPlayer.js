@@ -1,10 +1,11 @@
 import classes from './VideoPlayer.module.css'
 import Youtube from 'react-youtube'
 import {useContext,useState} from 'react'
+import {AuthContext} from '../../../Store/AuthReducer'
 import {CatagoriesContext} from '../../../Store/CatagoriesReducer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlusCircle,faCheck} from '@fortawesome/free-solid-svg-icons';
-import {useLocation} from 'react-router-dom'
+import {useLocation,useHistory} from 'react-router-dom'
 import Notes from './Notes/Notes'
 
 const VideoPlayer=()=>{
@@ -12,8 +13,13 @@ const VideoPlayer=()=>{
     const [newPlaylistName,setNewPlaylistName]=useState("")
     const [note,setNote]=useState("")
 
-    const {selectedVideo,addVideoToPlaylist,playlists,addNewPlaylist:addNewPlaylistAction,addNotes}=useContext(CatagoriesContext)
+    const {push}=useHistory()
 
+    const {selectedVideo,addToHistory,addVideoToPlaylist,
+        playlists,addNewPlaylist:addNewPlaylistAction
+        ,addNotes}=useContext(CatagoriesContext)
+
+    const {token}=useContext(AuthContext)
 
     const addNewPlaylist=async()=>{
         if(newPlaylistName.length>0){
@@ -33,6 +39,9 @@ const VideoPlayer=()=>{
             <Youtube
                 videoId={selectedVideo.link}
                 className={classes["youtube-window"]}
+                onPlay={()=>{
+                    addToHistory(selectedVideo._id)
+                }}
             />
             <div className={classes["options-bar"]}>
                 <h2>
@@ -42,7 +51,7 @@ const VideoPlayer=()=>{
                     <button 
                         className={`${classes["button-outline"]} ${classes["button-primary"]}`}
                         onClick={()=>{
-                            setOpenPlaylist(status=>!status)
+                            token?setOpenPlaylist(status=>!status):push("/login")
                         }}
                         >
                         Add To Playlist
@@ -52,8 +61,12 @@ const VideoPlayer=()=>{
                             playlists.map((item)=>(
                                 <li key={item.id}
                                     onClick={()=>{
-                                        addVideoToPlaylist(selectedVideo,item)
-                                        setOpenPlaylist(status=>!status)
+                                        if(token){
+                                            addVideoToPlaylist(selectedVideo,item)
+                                            setOpenPlaylist(status=>!status)
+                                        }else{
+                                            push("/login")
+                                        }
                                     }}
                                     className={item.id===selectedVideo.playlist?classes["video-active"]:null}
                                 >
@@ -67,7 +80,11 @@ const VideoPlayer=()=>{
                         <li>
                             <form className={classes["add-new-playlist"]} onSubmit={(event)=>{
                                     event.preventDefault()
-                                    addNewPlaylist(newPlaylistName)
+                                    if(token){
+                                        addNewPlaylist(newPlaylistName)
+                                    }else{
+                                        push('/login')
+                                    }
                                 }}>
                                 <input type="text" 
                                     className={classes["textbox"]} 
@@ -100,7 +117,7 @@ const VideoPlayer=()=>{
                 <h2>
                     Notes:
                 </h2>
-                <form 
+                {token&&(<form 
                     className={classes["add-note"]}
                     onSubmit={event=>{
                         event.preventDefault();
@@ -128,7 +145,7 @@ const VideoPlayer=()=>{
                             </button>
                         </div>
                     </label>
-                </form>
+                </form>)}
                 <ul className={classes["notes-list"]}>
                     {
                         selectedVideo.notes&&selectedVideo.notes.map(({name,note})=>(

@@ -1,9 +1,19 @@
-import {createContext, useReducer, useEffect} from 'react';
+import {createContext, useReducer, useEffect,useContext} from 'react';
+import {AuthContext} from './AuthReducer'
 import axios from 'axios'
+import { warningToast } from '../UI/Toast/Toast';
 
 export const CatagoriesContext=createContext();
 
 export const CatagoriesProvider=({children})=>{
+
+    const {userId,token} =useContext(AuthContext)
+
+    const config = {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }
 
     const catagoriesManipulation=(state,action)=>{
         switch (action.type) {
@@ -26,7 +36,7 @@ export const CatagoriesProvider=({children})=>{
                 return{
                     ...state,
                     currentCatagoryId:action.payload,
-                    selectedVideo:state.fullVideoList.filter(({catagoryId})=>catagoryId===action.payload)[0]
+                    selectedVideo:state.fullVideoList.filter(({catagoryId})=>+catagoryId===+action.payload)[0]
                 }
             case "SELECT_VIDEO":
                 return{
@@ -166,27 +176,40 @@ export const CatagoriesProvider=({children})=>{
 
     const getFilteredData=(videoList,id)=>{
         if(id)
-            return videoList.filter(item=>item.catagoryId===id)
+            return videoList.filter(item=>+item.catagoryId===+id)
         return []
     }
 
     const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
 
-    useEffect(()=>{
-        (async()=>{
-            if(state.selectedVideo){
-                const {data,status}=await axios.post("/api/add-video-to-history",{
-                    newVideo:state.selectedVideo
-                })
-                if(+status===201){
-                    dispatch({
-                        type:"ADD_TO_HISTORY",
-                        payload:[...data.histories]
-                    })
-                }
+    const addToHistory=async (videoId)=>{
+        console.log(videoId,userId)
+        if(state.selectedVideo){
+            try{
+                const {data}=await axios.put(`/api/histories/${videoId}/users/${userId}`,null,config)
+                console.log(data)
+            }catch(error){
+                console.log(error)
+                warningToast("Unable to add video to history")
             }
-        })()
-    },[state.selectedVideo])
+        }
+    }
+
+    // useEffect(()=>{
+    //     (async()=>{
+    //         if(state.selectedVideo){
+    //             const {data,status}=await axios.post("/api/add-video-to-history",{
+    //                 newVideo:state.selectedVideo
+    //             })
+    //             if(+status===201){
+    //                 dispatch({
+    //                     type:"ADD_TO_HISTORY",
+    //                     payload:[...data.histories]
+    //                 })
+    //             }
+    //         }
+    //     })()
+    // },[state.selectedVideo])
 
     useEffect(()=>{
         (async()=>{
@@ -204,17 +227,23 @@ export const CatagoriesProvider=({children})=>{
         })()
     },[])
 
-    // useEffect(()=>{
-    //     (
-    //         async()=>{
-    //             const {data}=await axios.get("/api/load-all-playlists")
-    //             dispatch({
-    //                 type:"CREATE_PLAYLIST",
-    //                 payload:[...data.playLists]
-    //             })
-    //         }
-    //     )()
-    // },[])
+    useEffect(()=>{
+        (
+            async()=>{
+                try{
+                if(token&&userId){
+                    const {data:{data}}=await axios.get(`/api/playlists/${userId}`,config)
+                    dispatch({
+                        type:"CREATE_PLAYLIST",
+                        payload:[...data]
+                    })
+                }
+                }catch(error){
+                    warningToast("Unable to load playlists")
+                }
+            }
+        )()
+    },[userId,token])
 
     return(
         <CatagoriesContext.Provider 
@@ -225,6 +254,7 @@ export const CatagoriesProvider=({children})=>{
                 addVideoToPlaylist:addVideoToPlaylist,
                 playlists:state.playlists,
                 addNewPlaylist:addNewPlaylist,
+                addToHistory:addToHistory,
                 deletePlaylist:deletePlaylist,
                 history:state.history,
                 addNotes:addNotes

@@ -8,14 +8,14 @@ const VideoNameList=({closeDropDown})=>{
         <ul className={classes["video-name-list"]}>
             {
                 videosByCatagory&&videosByCatagory.map((item)=>(
-                    <li key={item.id}
+                    <li key={item._id}
                         onClick={()=>{dispatch({
                             type:"SELECT_VIDEO",
                             payload:{...item}
                         })
                         closeDropDown&&closeDropDown()
                         }}
-                        className={selectedVideo&&selectedVideo.id===item.id?classes["video-active"]:null}
+                        className={selectedVideo&&selectedVideo._id===item._id?classes["video-active"]:null}
                     >
                         <p>
                         {item.name}

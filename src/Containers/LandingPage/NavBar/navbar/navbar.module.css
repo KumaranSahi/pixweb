@@ -16,5 +16,8 @@
     .navbar{
         padding: 5px;
     }
+    .alignment-div{
+        display: none;
+    }
 }
 
