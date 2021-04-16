@@ -43,14 +43,6 @@ export const CatagoriesProvider=({children})=>{
                     ...state,
                     history:[...action.payload]
                 }
-            case "ADD_NOTES_TO_VIDEO":
-                return{
-                    ...state,
-                    playlists:[...action.payload.playlist],
-                    fullVideoList:[...action.payload.fullVideosList],
-                    history:[...action.payload.history],
-                    selectedVideo:{...state.selectedVideo,notes:[...state.selectedVideo.notes,action.payload.note]}
-                }
             default:
                 return state;
         }
@@ -73,6 +65,8 @@ export const CatagoriesProvider=({children})=>{
                     payload:data.data
                 })
             }
+            const {content,by:{name,_id}}=data.data.notes[0]
+            console.log(content,name,_id)
         }catch(error){
             console.log(error)
             warningToast("Failed to load video")
@@ -165,24 +159,32 @@ export const CatagoriesProvider=({children})=>{
     }
 
     const addNotes=async (videoId,note)=>{
-        const {status,data}=await axios.post("/api/add-note-to-video",{
-            videoId,note
-        })
-        if(+status===201){
-            dispatch({
-                type:"ADD_NOTES_TO_VIDEO",
-                payload:{
-                    playlist:[...data.playlist.models],
-                    fullVideosList:[...data.fullVideosList.models],
-                    history:[...data.history.models],
-                    note:note
-                }
-            })
+        try{
+            const {data}=await axios.post(`/api/notes/${videoId}/users/${userId}`,{
+                note:note
+            },config)
+            if(data.ok){
+                successToast("Note Added")
+                selectVideo(videoId)
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Unable to add note")
         }
     }
 
-    
-
+    const deleteNote=async (noteId,videoId)=>{
+        try{
+            const {data}=await axios.delete(`/api/notes/${noteId}`,config)
+            if(data.ok){
+                successToast("Note Added")
+                selectVideo(videoId)
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Unable to delete note")
+        }
+    }
 
     const addToHistory=async (videoId)=>{
         if(state.selectedVideo && token){
@@ -300,7 +302,8 @@ export const CatagoriesProvider=({children})=>{
                 selectVideo:selectVideo,
                 deletePlaylist:deletePlaylist,
                 history:state.history,
-                addNotes:addNotes
+                addNotes:addNotes,
+                deleteNote:deleteNote
             }}
         >
             {children}

@@ -144,10 +144,7 @@ const VideoPlayer=()=>{
                     className={classes["add-note"]}
                     onSubmit={event=>{
                         event.preventDefault();
-                        addNotes(selectedVideo.id,{
-                            name:"Random Name",
-                            note:note
-                        })
+                        addNotes(selectedVideo._id,note)
                         setNote("")
                     }}
                     >
@@ -171,11 +168,14 @@ const VideoPlayer=()=>{
                 </form>)}
                 <ul className={classes["notes-list"]}>
                     {
-                        selectedVideo.notes&&selectedVideo.notes.map(({name,note})=>(
-                            <li key={`${Math.random()}${name}${note}`}>
+                        selectedVideo.notes&&selectedVideo.notes.map(({_id,content,by:{name:userName,_id:userId}})=>(
+                            <li key={`${Math.random()}${userName}${content}`}>
                                 <Notes 
-                                    name={name}
-                                    note={note}
+                                    name={userName}
+                                    note={content}
+                                    id={userId}
+                                    noteId={_id}
+                                    videoId={selectedVideo._id}
                                 />
                             </li>
                         ))
