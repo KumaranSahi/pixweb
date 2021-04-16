@@ -12,10 +12,10 @@ const PlaylistPage=()=>{
             </h1>
             <ul className={classes["list-of-playlists"]}>
                 {
-                    playlists.map(({id,name,videos})=>(
-                        <li key={id}>
+                    playlists.map(({_id,name,videos})=>(
+                        <li key={_id}>
                             <PlaylistList
-                                id={id}
+                                id={_id}
                                 name={name}
                                 videos={videos}
                             />

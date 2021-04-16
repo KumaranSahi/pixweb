@@ -38,29 +38,6 @@ export const CatagoriesProvider=({children})=>{
                     ...state,
                     selectedVideo:{...action.payload}
                 }
-            case "VIDEO_ADDED_TO_PLAYLIST":
-                return{
-                    ...state,
-                    playlists:[...action.payload.playlist],
-                    selectedVideo:{...state.selectedVideo,playlist:action.payload.playlistid},
-                    fullVideoList:[...action.payload.fullVideosList],
-                    history:[...action.payload.history]
-                }
-            case "VIDEO_REMOVED_FROM_PLAYLIST":
-                return{
-                    ...state,
-                    selectedVideo:{...state.selectedVideo,playlist:null},
-                    playlists:[...action.payload.playlist],
-                    fullVideoList:[...action.payload.fullVideosList],
-                    history:[...action.payload.history]
-                }
-            case "DELETE_PLAYLIST":
-                return{
-                    ...state,
-                    playlists:[...action.payload.playlist],
-                    fullVideoList:[...action.payload.fullVideosList],
-                    history:[...action.payload.history]
-                }
             case "ADD_TO_HISTORY":
                 return{
                     ...state,
@@ -157,16 +134,18 @@ export const CatagoriesProvider=({children})=>{
     }
 
     const deletePlaylist=async (playlistid)=>{
-        const {status,data}=await axios.delete("/api/delete-playlist",{params:playlistid})
-        if(+status===200){
-            dispatch({
-                type:"DELETE_PLAYLIST",
-                payload:{
-                    playlist:[...data.playlist.models],
-                    fullVideosList:[...data.fullVideosList.models],
-                    history:[...data.history.models]
-                }
-            })
+        try{
+            const {data}=await axios.delete(`/api/playlists/${playlistid}/users/${userId}`,config)
+            if(data.ok){
+                successToast("Playlist has been deleted")
+                dispatch({
+                    type:"CREATE_PLAYLIST",
+                    payload:[...data.data]
+                })
+            }
+        }catch(error){
+            console.log(error)
+            warningToast("Unable to delete playlist")
         }
     }
 
@@ -198,11 +177,13 @@ export const CatagoriesProvider=({children})=>{
     const filteredData=getFilteredData(state.fullVideoList,state.currentCatagoryId)
 
     const addToHistory=async (videoId)=>{
-        console.log(videoId,userId)
-        if(state.selectedVideo){
+        if(state.selectedVideo && token){
             try{
                 const {data}=await axios.put(`/api/histories/${videoId}/users/${userId}`,null,config)
-                console.log(data)
+                dispatch({
+                    type:"ADD_TO_HISTORY",
+                    payload:[...data.data]
+                })
             }catch(error){
                 console.log(error)
                 warningToast("Unable to add video to history")
@@ -210,21 +191,22 @@ export const CatagoriesProvider=({children})=>{
         }
     }
 
-    // useEffect(()=>{
-    //     (async()=>{
-    //         if(state.selectedVideo){
-    //             const {data,status}=await axios.post("/api/add-video-to-history",{
-    //                 newVideo:state.selectedVideo
-    //             })
-    //             if(+status===201){
-    //                 dispatch({
-    //                     type:"ADD_TO_HISTORY",
-    //                     payload:[...data.histories]
-    //                 })
-    //             }
-    //         }
-    //     })()
-    // },[state.selectedVideo])
+    useEffect(()=>{
+        (async()=>{
+            try{
+                if(token&&userId){
+                    const {data}=await axios.get(`/api/histories/${userId}`,config)
+                    dispatch({
+                        type:"ADD_TO_HISTORY",
+                        payload:[...data.data]
+                    })
+                }
+            }catch(error){
+                warningToast("Unable to load history")
+                console.log(error)
+            }
+        })()
+    },[userId,token])
 
     useEffect(()=>{
         (async()=>{
@@ -237,6 +219,7 @@ export const CatagoriesProvider=({children})=>{
                 })
             }
             }catch(error){
+                warningToast("Unable to load videos")
                 console.log(error)
             }
         })()

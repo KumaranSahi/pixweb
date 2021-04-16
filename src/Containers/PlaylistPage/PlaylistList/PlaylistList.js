@@ -22,7 +22,7 @@ const PlaylistList=({name,videos,id})=>{
             <ul className={classes["playlist-videolist"]}>
                 {
                     videos.map(video=>(
-                        <li key={video.id} className={classes["videolist-item"]}>
+                        <li key={video._id} className={classes["videolist-item"]}>
                             <img
                                 src={`https://img.youtube.com/vi/${video.link}/0.jpg`}
                                 alt="thumbnail"
