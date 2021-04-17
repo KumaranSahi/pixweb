@@ -1,6 +1,6 @@
 import {createContext, useReducer, useEffect,useContext} from 'react';
 import {AuthContext} from './AuthReducer'
-import axios from 'axios'
+import axios from '../useAxios'
 import { successToast, warningToast } from '../UI/Toast/Toast';
 
 export const CatagoriesContext=createContext();
@@ -65,8 +65,6 @@ export const CatagoriesProvider=({children})=>{
                     payload:data.data
                 })
             }
-            const {content,by:{name,_id}}=data.data.notes[0]
-            console.log(content,name,_id)
         }catch(error){
             console.log(error)
             warningToast("Failed to load video")

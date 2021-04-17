@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-axios.create({
-    headers: {
-        Authorization: "Bearer " + this.props.token
-    },
-    baseURL:""
+const instance=axios.create({
+    baseURL:"https://pixweb-api.herokuapp.com/"
 })
 
+export default instance
