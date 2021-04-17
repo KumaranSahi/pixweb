@@ -7,14 +7,11 @@ import VideoPlayer from './VideoPlayer/VideoPlayer'
 
 const Catagories=()=>{
     const {id}=useParams()
-    const {dispatch,selectedVideo}=useContext(CatagoriesContext);
+    const {selectedVideo,filterByCatagory}=useContext(CatagoriesContext);
 
     useEffect(()=>{
-        dispatch({
-            type:"FILTER_VIDEO_BY_CATAGORY",
-            payload:id
-        })
-    },[id,dispatch])
+        filterByCatagory(id)
+    },[id])
 
     return(
         <div className={classes["catagory-container"]}>

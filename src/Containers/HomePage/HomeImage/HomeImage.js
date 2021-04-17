@@ -9,7 +9,7 @@ const Carousel=()=>{
                 <h1>Pixweb</h1>
             </div>
             <h1 className={classes["tagline"]}>
-                Learn form the <span>Best</span> about the art of <span>Photography!</span>
+                Learn from the <span>Best</span> about the art of <span>Photography!</span>
             </h1>
         </div>
     )

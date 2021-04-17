@@ -175,7 +175,7 @@ export const CatagoriesProvider=({children})=>{
         try{
             const {data}=await axios.delete(`/api/notes/${noteId}`,config)
             if(data.ok){
-                successToast("Note Added")
+                successToast("Note deleted")
                 selectVideo(videoId)
             }
         }catch(error){
@@ -225,6 +225,14 @@ export const CatagoriesProvider=({children})=>{
         }
     }
     
+    const filterByCatagory=(catagoryId)=>{
+        selectVideo(state.fullVideoList.filter(item=>+item.catagoryId===+catagoryId)[0]._id)
+        dispatch({
+            type:"FILTER_VIDEO_BY_CATAGORY",
+            payload:catagoryId
+        })
+    }
+
     const getFilteredData=(videoList,id)=>{
         if(id)
             return videoList.filter(item=>+item.catagoryId===+id)
@@ -291,6 +299,7 @@ export const CatagoriesProvider=({children})=>{
                 dispatch:dispatch,
                 videosByCatagory:filteredData,
                 selectedVideo:state.selectedVideo,
+                filterByCatagory:filterByCatagory,
                 addVideoToPlaylist:addVideoToPlaylist,
                 playlists:state.playlists,
                 addNewPlaylist:addNewPlaylist,
