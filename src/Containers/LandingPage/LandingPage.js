@@ -10,6 +10,7 @@ import {useEffect,useContext} from 'react'
 import VideoPlayer from '../Catagories/VideoPlayer/VideoPlayer'
 import HistoryPage from '../History/History'
 import LoginPage from '../LoginPage/LoginPage'
+import Spinner from '../../UI/Spinner/Spinner'
 
 const VideoPlayerRoute=({...props})=>{
     const {selectedVideo}=useContext(CatagoriesContext)
@@ -38,9 +39,13 @@ const LandingPage=()=>{
         window.scrollTo(0, 0);
     }, [pathname]);
     
+    const {catagoriesLoading}=useContext(CatagoriesContext)
+    const {authLoading}=useContext(AuthContext)
+
     return(
         <div>
             <Navbar/>
+            {(catagoriesLoading||authLoading)&&<Spinner/>}
             <Switch>
                 <Route path="/catagory/:id" component={Catagories}/>
                 <PrivateLink path="/my-playlist" component={PlaylistPage}/>

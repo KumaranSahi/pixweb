@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom'
 export const AuthContext=createContext()
 
 export const AuthProvider=({children})=>{
-    
+    const [loading,setLoading]=useState(false)
     const {push}=useHistory();
 
     const authManipulation=(state,action)=>{
@@ -42,11 +42,13 @@ export const AuthProvider=({children})=>{
     const [currentPage,setCurrentPage]=useState("SIGNIN_PAGE")
 
     const signUpUser=async (userData)=>{
+        setLoading(true)
         try{
             const {data,status}=await axios.post('/api/users/signup',userData);
             if(data.ok){
                 successToast("User Added Successfully")
                 setCurrentPage("SIGNIN_PAGE")
+                setLoading(false)
             }
             else{
                 if(+status===208){
@@ -55,10 +57,12 @@ export const AuthProvider=({children})=>{
                 }
                 else
                     warningToast("Failed to add user")
+                setLoading(false)
             }
         }catch(error){
             warningToast("Failed to add user")
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -71,6 +75,7 @@ export const AuthProvider=({children})=>{
     }
 
     const signInUser=async (userData)=>{
+        setLoading(true)
         try{
             const {data:{data}}=await axios.post('/api/users/signin',userData);
             if(data.ok){
@@ -90,11 +95,13 @@ export const AuthProvider=({children})=>{
                     }
                 })
                 successToast("User Logged in Successfully")
+                setLoading(false)
                 push("/")
             }
         }catch(error){
             warningToast("Invalid username or password")
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -106,6 +113,7 @@ export const AuthProvider=({children})=>{
         dispatch({
             type:"SIGNOUT_USER"
         })
+        setLoading(false)
         push("/")
     }
 
@@ -136,15 +144,18 @@ export const AuthProvider=({children})=>{
     }
 
     const changePassword=async (userData)=>{
+        setLoading(true)
         try{
             const {data}=await axios.post('/api/users/password',userData);
             if(data.ok){
                 successToast("Password changed successfully");
                 setCurrentPage("SIGNIN_PAGE");
             }
+            setLoading(false)
         }catch(error){
             warningToast("Unable to change password please try again later")
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -165,7 +176,8 @@ export const AuthProvider=({children})=>{
                 signOutUser:signOutUser,
                 currentPage:currentPage,
                 changePassword:changePassword,
-                setCurrentPage:setCurrentPage
+                setCurrentPage:setCurrentPage,
+                authLoading:loading
             }}
         >
             {children}    

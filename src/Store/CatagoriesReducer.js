@@ -1,4 +1,4 @@
-import {createContext, useReducer, useEffect,useContext} from 'react';
+import {createContext, useReducer, useEffect,useContext, useState} from 'react';
 import {AuthContext} from './AuthReducer'
 import axios from '../useAxios'
 import { successToast, warningToast } from '../UI/Toast/Toast';
@@ -8,6 +8,7 @@ export const CatagoriesContext=createContext();
 export const CatagoriesProvider=({children})=>{
 
     const {userId,token} =useContext(AuthContext)
+    const [loading,setLoading]=useState(false)
 
     const config = {
         headers: {
@@ -57,6 +58,7 @@ export const CatagoriesProvider=({children})=>{
     });
 
     const selectVideo=async (videoid)=>{
+        setLoading(true)
         try{
             const {data}=await axios.get(`/api/videos/${videoid}`,config)
             if(data.ok){
@@ -65,8 +67,10 @@ export const CatagoriesProvider=({children})=>{
                     payload:data.data
                 })
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Failed to load video")
         }
     }
@@ -77,7 +81,7 @@ export const CatagoriesProvider=({children})=>{
             if(playlist.videos.some(item=>item._id===selectedVideo._id))
                 currentPlaylist=playlist._id;
         })
-        
+        setLoading(true)
         try{
             if(!currentPlaylist){
                 const {data}=await axios.put(`/api/playlists/${playlist._id}/video/${selectedVideo._id}`,null,config)
@@ -116,13 +120,16 @@ export const CatagoriesProvider=({children})=>{
                         })
                     }
                 }
+                setLoading(false)
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Unable to add video to playlist")
         }
     }
 
     const addNewPlaylist=async (newPlaylistName)=>{
+        setLoading(true)
         try{
             const {data}=await axios.post(`/api/playlists/${userId}`,{
                 name:newPlaylistName
@@ -134,13 +141,16 @@ export const CatagoriesProvider=({children})=>{
                 })
                 successToast("Playlist added")
             }
+            setLoading(false)            
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Unable to add playlist")
         }
     }
 
     const deletePlaylist=async (playlistid)=>{
+        setLoading(true)
         try{
             const {data}=await axios.delete(`/api/playlists/${playlistid}/users/${userId}`,config)
             if(data.ok){
@@ -150,13 +160,16 @@ export const CatagoriesProvider=({children})=>{
                     payload:[...data.data]
                 })
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Unable to delete playlist")
         }
     }
 
     const addNotes=async (videoId,note)=>{
+        setLoading(true)
         try{
             const {data}=await axios.post(`/api/notes/${videoId}/users/${userId}`,{
                 note:note
@@ -165,21 +178,26 @@ export const CatagoriesProvider=({children})=>{
                 successToast("Note Added")
                 selectVideo(videoId)
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
             warningToast("Unable to add note")
+            setLoading(false)
         }
     }
 
     const deleteNote=async (noteId,videoId)=>{
+        setLoading(true)
         try{
             const {data}=await axios.delete(`/api/notes/${noteId}`,config)
             if(data.ok){
                 successToast("Note deleted")
                 selectVideo(videoId)
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Unable to delete note")
         }
     }
@@ -200,28 +218,34 @@ export const CatagoriesProvider=({children})=>{
     }
 
     const addLikeToVideo=async (videoId)=>{
+        setLoading(true)
         try{
             const {data}=await axios.put(`/api/likes/${videoId}/users/${userId}`,null,config)
             if(data.ok){
                 selectVideo(videoId)
                 successToast("Video liked")
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
+            setLoading(false)
             warningToast("Failed to add like to video")
         }
     }
 
     const removeLikeFromVideo=async (like)=>{
+        setLoading(true)
         try{
             const {data}=await axios.delete(`/api/likes/${like._id}`,config)
             if(data.ok){
                 selectVideo(like.video)
                 successToast("Like removed")
             }
+            setLoading(false)
         }catch(error){
             console.log(error)
             warningToast("Failed to remove like from the video")
+            setLoading(false)
         }
     }
     
@@ -310,7 +334,8 @@ export const CatagoriesProvider=({children})=>{
                 deletePlaylist:deletePlaylist,
                 history:state.history,
                 addNotes:addNotes,
-                deleteNote:deleteNote
+                deleteNote:deleteNote,
+                catagoriesLoading:loading
             }}
         >
             {children}
