@@ -250,11 +250,11 @@ export const CatagoriesProvider=({children})=>{
     }
     
     const filterByCatagory=(catagoryId)=>{
-        selectVideo(state.fullVideoList.filter(item=>+item.catagoryId===+catagoryId)[0]._id)
         dispatch({
             type:"FILTER_VIDEO_BY_CATAGORY",
             payload:catagoryId
         })
+        state.fullVideoList.length>0&&selectVideo(state.fullVideoList.filter(item=>+item.catagoryId===+catagoryId)[0]._id)
     }
 
     const getFilteredData=(videoList,id)=>{
