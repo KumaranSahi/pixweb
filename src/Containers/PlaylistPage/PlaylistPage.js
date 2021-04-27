@@ -1,10 +1,9 @@
 import classes from './PlaylistPage.module.css';
-import {useContext} from 'react'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
+import {useCatagory} from '../../Store/CatagoriesReducer'
 import PlaylistList from './PlaylistList/PlaylistList';
 
 const PlaylistPage=()=>{
-    const {playlists}=useContext(CatagoriesContext);
+    const {playlists}=useCatagory();
     return(
         <div className={classes["playlist-container"]}>
             <h1>

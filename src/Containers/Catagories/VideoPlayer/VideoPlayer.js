@@ -1,8 +1,8 @@
 import classes from './VideoPlayer.module.css'
 import Youtube from 'react-youtube'
-import {useContext,useState} from 'react'
-import {AuthContext} from '../../../Store/AuthReducer'
-import {CatagoriesContext} from '../../../Store/CatagoriesReducer'
+import {useState} from 'react'
+import {useAuth} from '../../../Store/AuthReducer'
+import {useCatagory} from '../../../Store/CatagoriesReducer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlusCircle,faCheck} from '@fortawesome/free-solid-svg-icons';
 import {useLocation,useHistory} from 'react-router-dom'
@@ -17,9 +17,9 @@ const VideoPlayer=()=>{
 
     const {selectedVideo,addToHistory,addVideoToPlaylist,
         playlists,addNewPlaylist:addNewPlaylistAction
-        ,addNotes,addLikeToVideo,removeLikeFromVideo}=useContext(CatagoriesContext)
+        ,addNotes,addLikeToVideo,removeLikeFromVideo}=useCatagory()
 
-    const {token,userId}=useContext(AuthContext)
+    const {token,userId}=useAuth()
 
     const addNewPlaylist=async()=>{
         if(newPlaylistName.length>0){

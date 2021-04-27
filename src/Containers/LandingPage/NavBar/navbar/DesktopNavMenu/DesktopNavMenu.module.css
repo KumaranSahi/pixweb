@@ -3,12 +3,12 @@
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
-    z-index: 99;
-    background-color: #5d6563;
+    z-index: var(--z-index-mid);
+    background-color: var(--neutral-secondary);
 }
 
 .sticky-status-margin-top{
-    top: 70px;
+    top: 4.4rem;
     position: fixed;
 }
 

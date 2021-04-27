@@ -1,9 +1,11 @@
-import {useReducer,createContext,useState,useEffect} from 'react';
+import {useReducer,createContext,useState,useEffect,useContext} from 'react';
 import {warningToast,successToast,infoToast} from '../UI/Toast/Toast'
 import axios from '../useAxios'
 import {useHistory} from 'react-router-dom'
 
 export const AuthContext=createContext()
+
+export const useAuth=()=>useContext(AuthContext)
 
 export const AuthProvider=({children})=>{
     const [loading,setLoading]=useState(false)

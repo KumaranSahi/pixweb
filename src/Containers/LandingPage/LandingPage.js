@@ -3,31 +3,31 @@ import MobileNavBar from './NavBar/MobileNavBar/MobileNavBar'
 import HomePage from '../HomePage/HomePage'
 import {Redirect, Route,Switch,useLocation} from 'react-router-dom'
 import Catagories from '../Catagories/Catagories'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
-import {AuthContext} from '../../Store/AuthReducer'
+import {useCatagory} from '../../Store/CatagoriesReducer'
+import {useAuth} from '../../Store/AuthReducer'
 import PlaylistPage from '../PlaylistPage/PlaylistPage'
-import {useEffect,useContext} from 'react'
+import {useEffect} from 'react'
 import VideoPlayer from '../Catagories/VideoPlayer/VideoPlayer'
 import HistoryPage from '../History/History'
 import LoginPage from '../LoginPage/LoginPage'
 import Spinner from '../../UI/Spinner/Spinner'
 
 const VideoPlayerRoute=({...props})=>{
-    const {selectedVideo}=useContext(CatagoriesContext)
+    const {selectedVideo}=useCatagory()
     return(
         selectedVideo?<Route {...props}/>:<Redirect to="/"/>
     )
 }
 
 const PrivateLink=({...props})=>{
-    const {token}=useContext(AuthContext)
+    const {token}=useAuth()
     return(
         token?<Route {...props}/>:<Redirect to="/login"/>
     )
 }
 
 const LockLogin=({...props})=>{
-    const {token}=useContext(AuthContext)
+    const {token}=useAuth()
     return(
         token?<Redirect to="/"/>:<Route {...props}/>
     )
@@ -39,8 +39,8 @@ const LandingPage=()=>{
         window.scrollTo(0, 0);
     }, [pathname]);
     
-    const {catagoriesLoading}=useContext(CatagoriesContext)
-    const {authLoading}=useContext(AuthContext)
+    const {catagoriesLoading}=useCatagory()
+    const {authLoading}=useAuth()
 
     return(
         <div>

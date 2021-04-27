@@ -1,13 +1,15 @@
 import {createContext, useReducer, useEffect,useContext, useState} from 'react';
-import {AuthContext} from './AuthReducer'
+import {useAuth} from './AuthReducer'
 import axios from '../useAxios'
 import { successToast, warningToast } from '../UI/Toast/Toast';
 
 export const CatagoriesContext=createContext();
 
+export const useCatagory=()=>useContext(CatagoriesContext)
+
 export const CatagoriesProvider=({children})=>{
 
-    const {userId,token} =useContext(AuthContext)
+    const {userId,token} =useAuth()
     const [loading,setLoading]=useState(false)
 
     const config = {
