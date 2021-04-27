@@ -1,11 +1,10 @@
 import classes from './History.module.css'
-import {useContext} from 'react'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
+import {useCatagory} from '../../Store/CatagoriesReducer'
 import {useHistory} from 'react-router-dom'
 
 const History=()=>{
     const {push}=useHistory();
-    const {history,selectVideo}=useContext(CatagoriesContext)
+    const {history,selectVideo}=useCatagory()
 
     return(<div className={classes["history-container"]}>
         <h1>

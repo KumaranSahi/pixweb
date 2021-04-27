@@ -1,6 +1,6 @@
 .hamburger-container{
-    height: 35px;
-    width: 50px;
+    height: 2.2rem;
+    width: 3.125rem;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
@@ -8,12 +8,12 @@
     cursor: pointer;
     box-sizing: border-box;
     padding: 5px;
-    margin-right: 15px
+    margin-right: 1rem;
 }
 
 .hamburger-line{
     height: 2px;
-    width: 35px;
+    width: 2.2rem;
     background-color: white;
     transition: all 0.3s ease;
 }
@@ -24,7 +24,7 @@
     margin-bottom:9px;
     background-color: var(--primary);
     border: 1px solid var(--primary);
-    width: 32px;
+    width: 2rem;
 }
 
 .line-middle {
@@ -35,10 +35,10 @@
 .line-bottom {
     transform: translateX(1px) rotate(45deg);
     transform-origin:top right;
-    margin-top: 15px;
-    background-color: #FA9141;
-    border: 1px solid #FA9141;
-    width: 32px;
+    margin-top: 1rem;
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    width: 2rem;
   }
 
 @media (min-width:700px){

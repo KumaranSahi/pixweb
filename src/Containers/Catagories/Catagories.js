@@ -1,13 +1,13 @@
 import classes from './Catagories.module.css';
 import {useParams} from 'react-router-dom'
-import {useContext,useEffect} from 'react'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
+import {useEffect} from 'react'
+import {useCatagory} from '../../Store/CatagoriesReducer'
 import VideoNameList from '../VideoNameList/VideoNameList'
 import VideoPlayer from './VideoPlayer/VideoPlayer'
 
 const Catagories=()=>{
     const {id}=useParams()
-    const {selectedVideo,filterByCatagory}=useContext(CatagoriesContext);
+    const {selectedVideo,filterByCatagory}=useCatagory();
 
     useEffect(()=>{
         filterByCatagory(id)

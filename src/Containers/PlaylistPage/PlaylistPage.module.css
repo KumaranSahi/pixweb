@@ -1,5 +1,5 @@
 .playlist-container{
-    margin-top: 70px;
+    margin-top: 4.4rem;
     height: 100%;
 }
 
@@ -26,6 +26,6 @@
 
 @media (min-width:700px){
     .playlist-container{
-        margin-top: 123px;
+        margin-top: 7.7rem;
     }
 }

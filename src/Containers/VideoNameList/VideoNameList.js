@@ -1,9 +1,8 @@
 import classes from './VideoNameList.module.css'
-import {CatagoriesContext} from '../../Store/CatagoriesReducer'
-import { useContext } from 'react'
+import {useCatagory} from '../../Store/CatagoriesReducer'
 
 const VideoNameList=({closeDropDown})=>{
-    const {videosByCatagory,selectedVideo,selectVideo}=useContext(CatagoriesContext)
+    const {videosByCatagory,selectedVideo,selectVideo}=useCatagory()
     return(
         <ul className={classes["video-name-list"]}>
             {

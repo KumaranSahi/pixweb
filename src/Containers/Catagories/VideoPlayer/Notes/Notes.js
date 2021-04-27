@@ -1,13 +1,12 @@
 import classes from './Notes.module.css';
-import {useContext} from 'react'
-import {AuthContext} from '../../../../Store/AuthReducer'
-import {CatagoriesContext} from '../../../../Store/CatagoriesReducer'
+import {useAuth} from '../../../../Store/AuthReducer'
+import {useCatagory} from '../../../../Store/CatagoriesReducer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
 const Notes=({name,note,id,noteId,videoId})=>{
-    const {userId}=useContext(AuthContext);
-    const {deleteNote}=useContext(CatagoriesContext)
+    const {userId}=useAuth();
+    const {deleteNote}=useCatagory()
     return(
         <div className={classes["note"]}>
             <div className={classes["name-delete-container"]}>
