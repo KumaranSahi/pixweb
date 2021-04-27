@@ -1,0 +1,31 @@
+.playlist-container{
+    margin-top: 70px;
+    height: 100%;
+}
+
+.delete-playlist{
+    cursor: pointer;
+}
+
+.delete-playlist :hover{
+    color: var(--primary);
+}
+
+.playlist-container h1{
+    font-weight: 300;
+}
+
+.list-of-playlists{
+    list-style: none;
+    margin-bottom: 10rem;
+}
+
+.list-of-playlists hr{
+    margin-top: 5rem;
+}
+
+@media (min-width:700px){
+    .playlist-container{
+        margin-top: 123px;
+    }
+}

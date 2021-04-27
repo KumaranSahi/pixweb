@@ -1,0 +1,145 @@
+.video-player{
+    margin-bottom: 25rem;
+}
+
+.video-player-page{
+    margin-bottom: 25rem;
+    margin-top: 8rem;
+}
+
+.youtube-window{
+    width: 100%;
+}
+
+.options-bar{
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options-bar h2, .notes h2{
+    margin: 0px;
+    font-weight: 200;
+}
+
+.video-name{
+    font-weight: 300;
+    margin: 0px;
+}
+
+.button-outline{
+    outline: none;
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.button-primary{
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.watchlist-dropdown-container{
+    position: relative;
+}
+
+.watchlist-dropdown{
+    position: absolute;
+    background-color: var(--secondary);
+    top: 60%;
+    right: 13%;
+    width: 15rem;
+    list-style: none;
+    padding: 0;
+    min-height: 4rem;
+}
+
+.watchlist-dropdown li{
+    color: white;
+    padding: 0.5rem;
+    margin: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.watchlist-dropdown li:hover{
+    background-color: var(--primary);
+}
+
+.add-new-playlist{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.add-new-playlist svg{
+    font-size: 1.5rem;
+}
+
+.add-new-playlist button{
+    border: 0;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.textbox{
+    padding: 0.5rem;
+    outline: 0px;
+    border:0px;
+    letter-spacing: 1px;
+    background-color: var(--neutral-mild);
+}
+
+.textbox:focus{
+    border: 2px solid var(--black);
+}
+
+.description h3{
+    font-weight: 300;
+}
+
+.description p{
+    font-weight: 200;
+}
+
+.video-active{
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notes-list{
+    list-style: none;
+}
+
+.add-note input{
+    width: 80%;
+    border: 0;
+    border-bottom: 1px solid var(--neutral-mild);
+    padding: 0.5rem;
+    padding-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.add-note div{
+    display: flex;
+    align-items: center;
+}
+
+.button-solid{
+    color: var(--white);
+    cursor: pointer;
+    outline: none;
+    border: 0px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.button-solid-primary{
+    background-color: var(--primary);
+}

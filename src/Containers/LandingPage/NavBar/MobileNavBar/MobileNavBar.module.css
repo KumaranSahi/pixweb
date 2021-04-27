@@ -1,0 +1,45 @@
+.mobile-nav-bar{
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    bottom: 0%;
+    z-index: 100;
+    background-color: var(--secondary);
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.nav-button{
+    animation-name: fadeIn;
+    animation-duration: 1500ms;
+}
+
+.nav-button small{
+    color: white;
+    background-color: red;
+    margin-left: 0.5rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+}
+
+.nav-button a{
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.active-mobile{
+    background-color: var(--primary);
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+@media (min-width:700px){
+    .mobile-nav-bar{
+        display: none;
+    }
+}

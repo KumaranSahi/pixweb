@@ -1,0 +1,17 @@
+.note h3{
+    font-weight: 300;
+}
+
+.name-delete-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-delete-container svg{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.name-delete-container svg :hover{
+    color: var(--primary);
+}
