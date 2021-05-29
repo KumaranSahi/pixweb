@@ -3,7 +3,7 @@ import { useAuth, useVideo } from "../../../../Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Notes = ({ name, note, id, noteId, videoId }) => {
+export const Notes = ({ name, note, id, noteId, videoId }) => {
   const { token, userId } = useAuth();
   const { deleteNote, setVideoLoading, videoDispatch } = useVideo();
   return (
@@ -30,5 +30,3 @@ const Notes = ({ name, note, id, noteId, videoId }) => {
     </div>
   );
 };
-
-export default Notes;

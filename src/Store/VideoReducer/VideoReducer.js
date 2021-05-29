@@ -423,7 +423,7 @@ export const addLikeToVideo = async ({
   }
 };
 
-export const removeLikeFromVideo = async ({ like, setLoading, token }) => {
+export const removeLikeFromVideo = async ({ like, setLoading, token, dispatch }) => {
   setLoading(true);
   const config = {
     headers: {
@@ -433,7 +433,12 @@ export const removeLikeFromVideo = async ({ like, setLoading, token }) => {
   try {
     const { data } = await axios.delete(`/api/likes/${like._id}`, config);
     if (data.ok) {
-      selectVideo(like.video);
+      selectVideo({
+        videoId: like.video,
+        dispatch: dispatch,
+        setLoading: setLoading,
+        token: token,
+      });
       successToast("Like removed");
     }
     setLoading(false);

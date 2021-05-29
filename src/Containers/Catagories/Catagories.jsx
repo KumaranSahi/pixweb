@@ -3,9 +3,9 @@ import {useParams} from 'react-router-dom'
 import {useEffect} from 'react'
 import {useAuth, useVideo} from '../../Store'
 import VideoNameList from '../VideoNameList/VideoNameList'
-import VideoPlayer from './VideoPlayer/VideoPlayer'
+import {VideoPlayer} from './VideoPlayer/VideoPlayer'
 
-const Catagories=()=>{
+export const Catagories=()=>{
     const {id}=useParams()
     const {
       selectedVideo,
@@ -14,17 +14,25 @@ const Catagories=()=>{
       videoDispatch,
       fullVideoList,
     } = useVideo();
+
     const {token}=useAuth()
 
-    useEffect(()=>{
-          filterByCatagory({
-            catagoryId: id,
-            dispatch: videoDispatch,
-            fullVideoList: fullVideoList,
-            setLoading: setVideoLoading,
-            token: token,
-          });
-    },[id])
+    useEffect(() => {
+      filterByCatagory({
+        catagoryId: id,
+        dispatch: videoDispatch,
+        fullVideoList: fullVideoList,
+        setLoading: setVideoLoading,
+        token: token,
+      });
+    }, [
+      id,
+      filterByCatagory,
+      fullVideoList,
+      setVideoLoading,
+      token,
+      videoDispatch,
+    ]);
 
     return(
         <div className={classes["catagory-container"]}>
@@ -37,10 +45,7 @@ const Catagories=()=>{
             <div className={classes["catagory-video-name-list"]}>
                 <VideoNameList/>
             </div>
-            
         </div>
     )
 
 }
-
-export default Catagories
