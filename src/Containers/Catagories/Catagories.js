@@ -1,16 +1,29 @@
 import classes from './Catagories.module.css';
 import {useParams} from 'react-router-dom'
 import {useEffect} from 'react'
-import {useCatagory} from '../../Store/CatagoriesReducer'
+import {useAuth, useVideo} from '../../Store'
 import VideoNameList from '../VideoNameList/VideoNameList'
 import VideoPlayer from './VideoPlayer/VideoPlayer'
 
 const Catagories=()=>{
     const {id}=useParams()
-    const {selectedVideo,filterByCatagory}=useCatagory();
+    const {
+      selectedVideo,
+      filterByCatagory,
+      setVideoLoading,
+      videoDispatch,
+      fullVideoList,
+    } = useVideo();
+    const {token}=useAuth()
 
     useEffect(()=>{
-        filterByCatagory(id)
+          filterByCatagory({
+            catagoryId: id,
+            dispatch: videoDispatch,
+            fullVideoList: fullVideoList,
+            setLoading: setVideoLoading,
+            token: token,
+          });
     },[id])
 
     return(

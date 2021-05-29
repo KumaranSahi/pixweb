@@ -8,6 +8,7 @@ export const authReducer = (state, action) => {
         ...state,
         token: action.payload.token,
         userName: action.payload.userName,
+        userId: action.payload.userId,
         expiresIn: action.payload.expiresIn,
       };
     case "SIGNOUT_USER":
@@ -16,6 +17,7 @@ export const authReducer = (state, action) => {
         token: null,
         userName: null,
         expiresIn: null,
+        userId: null,
       };
     default:
       return state;
@@ -60,6 +62,7 @@ export const signOutUser = ({ dispatch }) => {
 export const onReload = ({ dispatch }) => {
   const token = localStorage.getItem("token");
   const expiresIn = new Date(localStorage.getItem("expiresIn"));
+  const userId = localStorage.getItem("userId");
   if (expiresIn <= new Date()) {
     signOutUser({ dispatch });
   } else {
@@ -74,6 +77,7 @@ export const onReload = ({ dispatch }) => {
         token: token,
         userName: userName,
         expiresIn: expiresIn,
+        userId: userId,
       },
     });
   }
@@ -108,6 +112,7 @@ export const signInUser = async ({ userData, setLoading, dispatch }) => {
     if (data.ok) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userId", data.userId);
       const expiresIn = new Date(new Date().getTime() + 86400000);
       localStorage.setItem("expiresIn", expiresIn);
       checkAuthTimeout({ expirationTime: 86400, dispatch: dispatch });
@@ -117,6 +122,7 @@ export const signInUser = async ({ userData, setLoading, dispatch }) => {
           token: data.token,
           userName: data.userName,
           expiresIn: expiresIn,
+          userId: data.userId,
         },
       });
       successToast("User Logged in Successfully");

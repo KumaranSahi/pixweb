@@ -1,6 +1,6 @@
 import classes from './Avatar.module.css';
 import {useState} from 'react'
-import {useAuth} from '../../../../../Store/AuthReducer'
+import {useAuth} from '../../../../../Store'
 import profileImage from '../../../../../Assets/profileimage.jpg'
 import {Link,useLocation} from 'react-router-dom'
 

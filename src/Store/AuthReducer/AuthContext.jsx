@@ -26,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
     token: null,
     userName: null,
     expiresIn: null,
+    userId: null,
   });
 
   useEffect(() => {

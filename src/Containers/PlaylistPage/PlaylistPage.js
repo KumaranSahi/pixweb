@@ -1,9 +1,9 @@
 import classes from './PlaylistPage.module.css';
-import {useCatagory} from '../../Store/CatagoriesReducer'
+import {useVideo} from '../../Store'
 import PlaylistList from './PlaylistList/PlaylistList';
 
 const PlaylistPage=()=>{
-    const {playlists}=useCatagory();
+    const {playlists}=useVideo();
     return(
         <div className={classes["playlist-container"]}>
             <h1>

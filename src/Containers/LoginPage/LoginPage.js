@@ -1,11 +1,19 @@
 import classes from './LoginPage.module.css';
 import {useState} from 'react'
-import {useAuth} from '../../Store/AuthReducer'
+import {useAuth} from '../../Store'
 import { warningToast } from '../../UI/Toast/Toast';
 
 const LoginPage=()=>{
 
-    const {signUpUser,signInUser,currentPage,setCurrentPage,changePassword}=useAuth()
+    const {
+      signUpUser,
+      signInUser,
+      currentPage,
+      changePassword,
+      setAuthLoading,
+      setAuthCurrentPage,
+      authDispatch,
+    } = useAuth();
 
     const [userName,setUserName]=useState("")
     const [userNameValid,setUserNameValid]=useState(true)
@@ -36,10 +44,14 @@ const LoginPage=()=>{
         validateEmail();
         if(userNameValid && emailValid){
             signUpUser({
-                name:userName,
-                email:email,
-                password:password
-            })
+              userData: {
+                name: userName,
+                email: email,
+                password: password,
+              },
+              setLoading: setAuthLoading,
+              setCurrentPage: setAuthCurrentPage,
+            });
         }
     }
 
@@ -48,9 +60,13 @@ const LoginPage=()=>{
         validateEmail();
         if(emailValid)
             signInUser({
-                email:email,
-                password:password
-            })
+              userData: {
+                email: email,
+                password: password,
+              },
+              setLoading: setAuthLoading,
+              dispatch: authDispatch,
+            });
     }
 
     const changePasswordSubmit=async (event)=>{
@@ -58,10 +74,14 @@ const LoginPage=()=>{
         validateEmail();
         if(password===confirmPassword){
             changePassword({
-                email:email,
-                password:password,
-                confirmPassword:confirmPassword
-            })
+              userData: {
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+              },
+              setLoading:setAuthLoading,
+              setCurrentPage:setAuthLoading,
+            });
         }else{
             warningToast("Passwords do not match")
         }
@@ -207,9 +227,9 @@ const LoginPage=()=>{
             <div className={classes["login"]}>
                 <div className={classes["signin-signup-container"]}>
                     {pageToRender()}
-                    {currentPage==="SIGNIN_PAGE"&&<p className={classes["switch-page"]} onClick={()=>setCurrentPage("CHANGE_PASSWORD")}>Forgot Password</p>}
-                    {currentPage==="SIGNIN_PAGE"?<p className={classes["switch-page"]} onClick={()=>setCurrentPage("SIGNUP_PAGE")}>New to Pix? Sign up!</p>:
-                        <p className={classes["switch-page"]} onClick={()=>setCurrentPage("SIGNIN_PAGE")}>Already have an Account? Sign In!</p>}
+                    {currentPage==="SIGNIN_PAGE"&&<p className={classes["switch-page"]} onClick={()=>setAuthCurrentPage("CHANGE_PASSWORD")}>Forgot Password</p>}
+                    {currentPage==="SIGNIN_PAGE"?<p className={classes["switch-page"]} onClick={()=>setAuthCurrentPage("SIGNUP_PAGE")}>New to Pix? Sign up!</p>:
+                        <p className={classes["switch-page"]} onClick={()=>setAuthCurrentPage("SIGNIN_PAGE")}>Already have an Account? Sign In!</p>}
                 </div>
             </div>
         </div>
