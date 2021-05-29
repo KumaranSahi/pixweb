@@ -1,17 +1,17 @@
 import Navbar from "./NavBar/navbar/navbar";
 import MobileNavBar from "./NavBar/MobileNavBar/MobileNavBar";
-import HomePage from "../HomePage/HomePage";
+import { HomePage } from "../HomePage/HomePage";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import {Catagories} from "../Catagories/Catagories";
+import { Catagories } from "../Catagories/Catagories";
 import { useAuth, useVideo } from "../../Store";
 import PlaylistPage from "../PlaylistPage/PlaylistPage";
 import { useEffect } from "react";
-import {VideoPlayer} from "../Catagories/VideoPlayer/VideoPlayer";
+import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
 import HistoryPage from "../History/History";
 import LoginPage from "../LoginPage/LoginPage";
 import Spinner from "../../UI/Spinner/Spinner";
 
-import classes from "./LandingPage.module.css"
+import classes from "./LandingPage.module.css";
 
 const VideoPlayerRoute = ({ ...props }) => {
   const { selectedVideo } = useVideo();
