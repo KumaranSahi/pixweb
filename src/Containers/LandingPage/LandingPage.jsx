@@ -7,7 +7,7 @@ import { useAuth, useVideo } from "../../Store";
 import { PlaylistPage } from "../PlaylistPage/PlaylistPage";
 import { useEffect } from "react";
 import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
-import HistoryPage from "../History/History";
+import { HistoryPage } from "../History/History";
 import { SigninPage } from "../SigninPage/SigninPage";
 import Spinner from "../../UI/Spinner/Spinner";
 

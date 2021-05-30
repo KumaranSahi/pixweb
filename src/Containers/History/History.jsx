@@ -2,7 +2,7 @@ import classes from "./History.module.css";
 import { useVideo,useAuth } from "../../Store";
 import { useHistory } from "react-router-dom";
 
-const History = () => {
+export const HistoryPage = () => {
   const { push } = useHistory();
   const { history, selectVideo, videoDispatch, setVideoLoading } = useVideo();
     const {token}=useAuth()
@@ -33,5 +33,3 @@ const History = () => {
     </div>
   );
 };
-
-export default History;
