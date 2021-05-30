@@ -1,9 +1,9 @@
-.dropdown-menu{
-    position: fixed;
-    top: 4.4rem;
-    right:0;
-    width: 100%;
-    height: 90%;
-    z-index: var(--z-index-high);
-    box-sizing: border-box;
+.dropdown-menu {
+  position: fixed;
+  top: 4.4rem;
+  right: 0;
+  width: 100%;
+  height: 90%;
+  z-index: var(--z-index-high);
+  box-sizing: border-box;
 }

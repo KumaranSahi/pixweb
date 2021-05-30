@@ -1,5 +1,5 @@
-import Navbar from "./NavBar/navbar/navbar";
-import MobileNavBar from "./NavBar/MobileNavBar/MobileNavBar";
+import { Navbar } from "./NavBar/Navbar/Navbar";
+import { MobileNavBar } from "./NavBar/MobileNavBar/MobileNavBar";
 import { HomePage } from "../HomePage/HomePage";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Catagories } from "../Catagories/Catagories";

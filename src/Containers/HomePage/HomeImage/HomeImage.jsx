@@ -1,7 +1,7 @@
 import classes from './HomeImage.module.css'
 import Logo from '../../../Assets/mk logo finD.png'
 
-const Carousel=()=>{
+export const HomeImage=()=>{
     return(
         <div className={classes["home-image-container"]}>
             <div className={classes['pixweb-title']}>
@@ -14,5 +14,3 @@ const Carousel=()=>{
         </div>
     )
 }
-
-export default Carousel;

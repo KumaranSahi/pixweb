@@ -1,4 +1,4 @@
-import HomeImage from './HomeImage/HomeImage'
+import {HomeImage} from './HomeImage/HomeImage'
 import {HomePageCatagories} from './HomePageCatagories/HomePageCatagories'
 
 export const HomePage=()=>{

@@ -1,43 +1,45 @@
-.navigation-items-desktop{
-    display: none;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    z-index: var(--z-index-mid);
-    background-color: var(--neutral-secondary);
+.navigation-items-desktop {
+  display: none;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  z-index: var(--z-index-mid);
+  background-color: var(--neutral-secondary);
 }
 
-.sticky-status-margin-top{
-    top: 4.4rem;
-    position: fixed;
+.sticky-status-margin-top {
+  top: 4.4rem;
+  position: fixed;
 }
 
-
-.nav-button{
-    color: white;
-    animation-name: fadeIn;
-    animation-duration: 1500ms;
-    display: flex;
+.nav-button {
+  color: white;
+  animation-name: fadeIn;
+  animation-duration: 1500ms;
+  display: flex;
 }
 
-.nav-button a{
-    text-decoration: none;
-    color: var(--neutral-mild);
-    cursor: pointer;
+.nav-button a {
+  text-decoration: none;
+  color: var(--neutral-mild);
+  cursor: pointer;
 }
 
-.active-desktop{
-    border-bottom: 2px solid var(--primary);
+.active-desktop {
+  border-bottom: 2px solid var(--primary);
 }
-
 
 @keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
- } 
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
- @media (min-width:700px){
-    .navigation-items-desktop{
-        display: flex;
-    }
+@media (min-width: 700px) {
+  .navigation-items-desktop {
+    display: flex;
+  }
 }
