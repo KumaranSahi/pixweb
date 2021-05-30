@@ -4,7 +4,7 @@ import { HomePage } from "../HomePage/HomePage";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Catagories } from "../Catagories/Catagories";
 import { useAuth, useVideo } from "../../Store";
-import PlaylistPage from "../PlaylistPage/PlaylistPage";
+import { PlaylistPage } from "../PlaylistPage/PlaylistPage";
 import { useEffect } from "react";
 import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
 import HistoryPage from "../History/History";

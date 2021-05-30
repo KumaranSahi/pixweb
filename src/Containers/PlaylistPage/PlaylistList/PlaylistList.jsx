@@ -6,8 +6,13 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const PlaylistList = ({ name, videos, id }) => {
   const { push } = useHistory();
-  const { deletePlaylist, selectVideo, setVideoLoading, videoDispatch } =
-    useVideo();
+  const {
+    deletePlaylist,
+    selectVideo,
+    setVideoLoading,
+    videoDispatch,
+    playlists,
+  } = useVideo();
   const { token } = useAuth();
   return (
     <div className={classes["playlist-list"]}>
@@ -22,6 +27,7 @@ export const PlaylistList = ({ name, videos, id }) => {
               setLoading: setVideoLoading,
               token: token,
               dispatch: videoDispatch,
+              playlists: playlists,
             })
           }
         />
@@ -37,7 +43,7 @@ export const PlaylistList = ({ name, videos, id }) => {
                   videoId: video._id,
                   dispatch: videoDispatch,
                   setLoading: setVideoLoading,
-                  token:token,
+                  token: token,
                 });
                 push("/video-player");
               }}

@@ -277,6 +277,7 @@ export const deletePlaylist = async ({
   setLoading,
   token,
   dispatch,
+  playlists,
 }) => {
   setLoading(true);
   const config = {
@@ -285,15 +286,12 @@ export const deletePlaylist = async ({
     },
   };
   try {
-    const { data } = await axios.delete(
-      `/api/playlists/${playlistid}/users`,
-      config
-    );
+    const { data } = await axios.delete(`/api/playlists/${playlistid}`, config);
     if (data.ok) {
       successToast("Playlist has been deleted");
       dispatch({
         type: "CREATE_PLAYLIST",
-        payload: [...data.data],
+        payload: playlists.filter(({ _id }) => _id !== playlistid),
       });
     }
     setLoading(false);
