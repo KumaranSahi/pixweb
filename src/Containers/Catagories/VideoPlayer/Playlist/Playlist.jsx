@@ -17,6 +17,7 @@ export const Playlist = ({ setOpenPlaylist }) => {
     swapPlaylist,
     removeFromPlaylist,
     addNewPlaylist,
+    videoLoading,
   } = useVideo();
   const { push } = useHistory();
 
@@ -115,7 +116,7 @@ export const Playlist = ({ setOpenPlaylist }) => {
             value={newPlaylistName}
             onChange={(event) => setNewPlaylistName(event.target.value)}
           />
-          <button type="submit">
+          <button type="submit" disabled={videoLoading}>
             <FontAwesomeIcon icon={faPlusCircle} />
           </button>
         </form>
