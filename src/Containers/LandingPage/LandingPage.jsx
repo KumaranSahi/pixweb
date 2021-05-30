@@ -28,7 +28,7 @@ const LockLogin = ({ ...props }) => {
   return token ? <Redirect to="/" /> : <Route {...props} />;
 };
 
-const LandingPage = () => {
+export const LandingPage = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,5 +55,3 @@ const LandingPage = () => {
     </div>
   );
 };
-
-export default LandingPage;

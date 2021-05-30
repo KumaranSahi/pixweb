@@ -1,5 +1,5 @@
 import "./App.css";
-import LandingPage from "./Containers/LandingPage/LandingPage";
+import { LandingPage } from "./Containers/LandingPage/LandingPage";
 import { VideoContextProvider } from "./Store";
 import { ToastContainer } from "react-toastify";
 
