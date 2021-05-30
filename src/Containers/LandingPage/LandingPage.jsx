@@ -8,7 +8,7 @@ import PlaylistPage from "../PlaylistPage/PlaylistPage";
 import { useEffect } from "react";
 import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
 import HistoryPage from "../History/History";
-import LoginPage from "../LoginPage/LoginPage";
+import { SigninPage } from "../SigninPage/SigninPage";
 import Spinner from "../../UI/Spinner/Spinner";
 
 import classes from "./LandingPage.module.css";
@@ -47,7 +47,7 @@ export const LandingPage = () => {
           <PrivateLink path="/my-playlist" component={PlaylistPage} />
           <VideoPlayerRoute path="/video-player" component={VideoPlayer} />
           <PrivateLink path="/history" component={HistoryPage} />
-          <LockLogin path="/login" component={LoginPage} />
+          <LockLogin path="/login" component={SigninPage} />
           <Route path="/" component={HomePage} />
         </Switch>
       </div>

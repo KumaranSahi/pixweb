@@ -3,44 +3,53 @@ import { useState } from "react";
 import { useAuth } from "../../../../../Store";
 import profileImage from "../../../../../Assets/profileimage.jpg";
 import { Link, useLocation } from "react-router-dom";
+import { Menu, MenuItem } from "@material-ui/core";
 
 export const Avatar = () => {
-  const { userName, signOutUser } = useAuth();
+  const { userName, signOutUser, authDispatch } = useAuth();
 
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    signOutUser({ dispatch: authDispatch });
+    handleClose();
+  };
 
   let avatar = null;
   let { pathname } = useLocation();
   if (userName) {
     avatar = (
-      <div className={classes["name-avatar-container"]}>
-        <p onClick={() => setOpenDropdown((open) => !open)}>
-          Hello, {userName}
-        </p>
-        <div className={classes["avatar-container"]}>
-          <img
-            src={profileImage}
-            className={classes["avatar"]}
-            alt="Active avatar"
-            onClick={() => setOpenDropdown((open) => !open)}
-          />
-          <div
-            className={`${classes["avatar-bubble"]} ${classes["bubble-active"]}`}
-          ></div>
-          {openDropdown && (
-            <ul className={classes["signout-dropdown"]}>
-              <li
-                onClick={() => {
-                  signOutUser();
-                  setOpenDropdown(false);
-                }}
-              >
-                Sign out
-              </li>
-            </ul>
-          )}
+      <>
+        <div className={classes["name-avatar-container"]} onClick={handleClick}>
+          <p>Hello, {userName}</p>
+          <div className={classes["avatar-container"]}>
+            <img
+              src={profileImage}
+              className={classes["avatar"]}
+              alt="Active avatar"
+            />
+            <div
+              className={`${classes["avatar-bubble"]} ${classes["bubble-active"]}`}
+            ></div>
+          </div>
         </div>
-      </div>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
+      </>
     );
   } else {
     avatar = pathname !== "/login" && (
