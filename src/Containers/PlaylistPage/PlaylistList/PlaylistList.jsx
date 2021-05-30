@@ -4,7 +4,7 @@ import { useVideo, useAuth } from "../../../Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const PlaylistList = ({ name, videos, id }) => {
+export const PlaylistList = ({ name, videos, id }) => {
   const { push } = useHistory();
   const { deletePlaylist, selectVideo, setVideoLoading, videoDispatch } =
     useVideo();
@@ -50,5 +50,3 @@ const PlaylistList = ({ name, videos, id }) => {
     </div>
   );
 };
-
-export default PlaylistList;

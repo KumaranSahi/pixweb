@@ -1,7 +1,7 @@
 import classes from "./VideoNameList.module.css";
 import { useAuth, useVideo } from "../../Store";
 
-const VideoNameList = ({ closeDropDown }) => {
+export const VideoNameList = ({ closeDropDown }) => {
   const {
     videosByCatagory,
     selectedVideo,
@@ -9,9 +9,7 @@ const VideoNameList = ({ closeDropDown }) => {
     videoDispatch,
     setVideoLoading,
   } = useVideo();
-  const {
-    token
-  }=useAuth()
+  const { token } = useAuth();
   return (
     <ul className={classes["video-name-list"]}>
       {videosByCatagory &&
@@ -39,5 +37,3 @@ const VideoNameList = ({ closeDropDown }) => {
     </ul>
   );
 };
-
-export default VideoNameList;
