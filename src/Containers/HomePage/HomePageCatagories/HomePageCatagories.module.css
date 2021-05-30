@@ -1,11 +1,11 @@
-.homepage-catagories-container h1{
-    font-weight: 300;
+.homepage-catagories-container h1 {
+  font-weight: 300;
 }
 
-.homepage-catagories-container ul{
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    padding-inline-start: 2rem;
+.homepage-catagories-container ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  padding-inline-start: 2rem;
 }

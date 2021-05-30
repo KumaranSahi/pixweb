@@ -5,15 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
-import {AuthProvider} from './Store/AuthReducer'
+import {AuthContextProvider} from './Store'
 
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
-        <AuthProvider>
+        <AuthContextProvider>
           <App />
-        </AuthProvider>
+        </AuthContextProvider>
       </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

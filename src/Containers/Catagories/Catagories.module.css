@@ -1,5 +1,4 @@
 .catagory-container{
-    margin-top: 70px;
     height: 100%;
 }
 
@@ -27,7 +26,6 @@
 
     .catagory-container{
         display: grid;
-        margin-top: 123px;
         grid-template-columns: 4fr 1fr;
     }
 }
