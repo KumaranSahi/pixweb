@@ -1,5 +1,5 @@
 import classes from "../VideoPlayer.module.css";
-import { useAuth, useVideo } from "../../../../Store";
+import { useAuth, useVideo } from "../../../../store";
 import { useHistory } from "react-router-dom";
 
 export const Likes = () => {

@@ -3,7 +3,7 @@ import { MobileNavBar } from "./NavBar/MobileNavBar/MobileNavBar";
 import { HomePage } from "../HomePage/HomePage";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Catagories } from "../Catagories/Catagories";
-import { useAuth, useVideo } from "../../Store";
+import { useAuth, useVideo } from "../../store";
 import { PlaylistPage } from "../PlaylistPage/PlaylistPage";
 import { useEffect } from "react";
 import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";

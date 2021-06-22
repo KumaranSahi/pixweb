@@ -1,5 +1,5 @@
 import classes from "./SigninPage.module.css";
-import { useAuth } from "../../Store";
+import { useAuth } from "../../store";
 import { warningToast } from "../../UI/Toast/Toast";
 import { useSigninPageReducer } from "./SigninReducer";
 import {

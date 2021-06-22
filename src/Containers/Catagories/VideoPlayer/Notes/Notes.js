@@ -1,5 +1,5 @@
 import classes from "./Notes.module.css";
-import { useAuth, useVideo } from "../../../../Store";
+import { useAuth, useVideo } from "../../../../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 

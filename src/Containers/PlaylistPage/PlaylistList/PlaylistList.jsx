@@ -1,6 +1,6 @@
 import classes from "./PlaylistList.module.css";
 import { useHistory } from "react-router-dom";
-import { useVideo, useAuth } from "../../../Store";
+import { useVideo, useAuth } from "../../../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 

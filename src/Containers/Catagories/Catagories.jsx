@@ -1,7 +1,7 @@
 import classes from "./Catagories.module.css";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useAuth, useVideo } from "../../Store";
+import { useAuth, useVideo } from "../../store";
 import { VideoNameList } from "../VideoNameList/VideoNameList";
 import { VideoPlayer } from "./VideoPlayer/VideoPlayer";
 

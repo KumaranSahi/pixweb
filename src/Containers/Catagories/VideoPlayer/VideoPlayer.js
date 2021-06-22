@@ -1,7 +1,7 @@
 import classes from "./VideoPlayer.module.css";
 import Youtube from "react-youtube";
 import { useState } from "react";
-import { useAuth, useVideo } from "../../../Store";
+import { useAuth, useVideo } from "../../../store";
 import { useLocation, useHistory } from "react-router-dom";
 import { Notes } from "./Notes/Notes";
 import { Likes } from "./Likes/Likes";

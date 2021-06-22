@@ -1,9 +1,9 @@
 import classes from "../VideoPlayer.module.css";
-import { useAuth, useVideo } from "../../../../Store";
+import { useAuth, useVideo } from "../../../../store";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
-import {useState} from 'react'
+import { useState } from "react";
 
 export const Playlist = ({ setOpenPlaylist }) => {
   const [newPlaylistName, setNewPlaylistName] = useState("");

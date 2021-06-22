@@ -1,5 +1,5 @@
 import classes from "./VideoNameList.module.css";
-import { useAuth, useVideo } from "../../Store";
+import { useAuth, useVideo } from "../../store";
 
 export const VideoNameList = ({ closeDropDown }) => {
   const {

@@ -1,5 +1,5 @@
 import classes from "./History.module.css";
-import { useVideo,useAuth } from "../../Store";
+import { useVideo,useAuth } from "../../store";
 import { useHistory } from "react-router-dom";
 
 export const HistoryPage = () => {
