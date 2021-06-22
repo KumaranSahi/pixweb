@@ -1,5 +1,6 @@
-import axios from "../../useAxios";
+import { APP_URL } from "../../axiosUtils";
 import { successToast, warningToast } from "../../UI/Toast/Toast";
+import axios from "axios";
 
 export const VideoReducer = (state, action) => {
   switch (action.type) {
@@ -34,17 +35,12 @@ export const VideoReducer = (state, action) => {
   }
 };
 
-export const loadPlaylist = async ({ token, dispatch, setLoading }) => {
+export const loadPlaylist = async ({ dispatch, setLoading }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
     const {
       data: { data },
-    } = await axios.get(`/api/playlists`, config);
+    } = await axios.get(`${APP_URL}/api/playlists`);
     dispatch({
       type: "CREATE_PLAYLIST",
       payload: [...data],
@@ -57,15 +53,10 @@ export const loadPlaylist = async ({ token, dispatch, setLoading }) => {
   }
 };
 
-export const loadHistory = async ({ dispatch, token, setLoading }) => {
+export const loadHistory = async ({ dispatch, setLoading }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.get(`/api/histories`, config);
+    const { data } = await axios.get(`${APP_URL}/api/histories`);
     dispatch({
       type: "ADD_TO_HISTORY",
       payload: [...data.data],
@@ -81,7 +72,7 @@ export const loadHistory = async ({ dispatch, token, setLoading }) => {
 export const loadVideos = async ({ dispatch, setLoading }) => {
   setLoading(true);
   try {
-    const { data } = await axios.get("/api/videos");
+    const { data } = await axios.get(`${APP_URL}/api/videos`);
     if (data.ok) {
       dispatch({
         type: "CREATE_VIDEOLIST",
@@ -96,15 +87,10 @@ export const loadVideos = async ({ dispatch, setLoading }) => {
   }
 };
 
-export const selectVideo = async ({ videoId, dispatch, setLoading, token }) => {
+export const selectVideo = async ({ videoId, dispatch, setLoading }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.get(`/api/videos/${videoId}`, config);
+    const { data } = await axios.get(`${APP_URL}/api/videos/${videoId}`);
     if (data.ok) {
       dispatch({
         type: "SELECT_VIDEO",
@@ -122,22 +108,15 @@ export const selectVideo = async ({ videoId, dispatch, setLoading, token }) => {
 export const addVideoToPlaylist = async ({
   selectedVideo,
   selectedPlaylist,
-  token,
   playlists,
   setLoading,
   dispatch,
 }) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   setLoading(true);
   try {
     const { data } = await axios.put(
-      `/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`,
-      null,
-      config
+      `${APP_URL}/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`,
+      null
     );
     if (data.ok) {
       successToast("Video added to playlist");
@@ -159,20 +138,13 @@ export const addVideoToPlaylist = async ({
 export const removeFromPlaylist = async ({
   selectedVideo,
   selectedPlaylist,
-  token,
   playlists,
   setLoading,
   dispatch,
 }) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
     const { data } = await axios.delete(
-      `/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`,
-      config
+      `${APP_URL}/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`
     );
     if (data.ok) {
       successToast("Video removed from playlist");
@@ -193,30 +165,22 @@ export const removeFromPlaylist = async ({
 export const swapPlaylist = async ({
   selectedVideo,
   selectedPlaylist,
-  token,
   playlists,
   setLoading,
   dispatch,
 }) => {
   let currentPlaylist = null;
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
     playlists.forEach((playlist) => {
       if (playlist.videos.some((item) => item._id === selectedVideo._id))
         currentPlaylist = playlist._id;
     });
     const { data } = await axios.delete(
-      `/api/playlists/${currentPlaylist}/video/${selectedVideo._id}`,
-      config
+      `${APP_URL}/api/playlists/${currentPlaylist}/video/${selectedVideo._id}`
     );
     const { data: addVideo } = await axios.put(
-      `/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`,
-      null,
-      config
+      `${APP_URL}/api/playlists/${selectedPlaylist._id}/video/${selectedVideo._id}`,
+      null
     );
     if (addVideo.ok) {
       successToast("Video added to playlist");
@@ -239,24 +203,14 @@ export const swapPlaylist = async ({
 export const addNewPlaylist = async ({
   newPlaylistName,
   setLoading,
-  token,
   dispatch,
   playlists,
 }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.post(
-      `/api/playlists`,
-      {
-        name: newPlaylistName,
-      },
-      config
-    );
+    const { data } = await axios.post(`${APP_URL}/api/playlists`, {
+      name: newPlaylistName,
+    });
     if (data.ok) {
       dispatch({
         type: "CREATE_PLAYLIST",
@@ -275,18 +229,14 @@ export const addNewPlaylist = async ({
 export const deletePlaylist = async ({
   playlistid,
   setLoading,
-  token,
   dispatch,
   playlists,
 }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.delete(`/api/playlists/${playlistid}`, config);
+    const { data } = await axios.delete(
+      `${APP_URL}/api/playlists/${playlistid}`
+    );
     if (data.ok) {
       successToast("Playlist has been deleted");
       dispatch({
@@ -302,34 +252,18 @@ export const deletePlaylist = async ({
   }
 };
 
-export const addNotes = async ({
-  videoId,
-  note,
-  setLoading,
-  token,
-  dispatch,
-}) => {
+export const addNotes = async ({ videoId, note, setLoading, dispatch }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.post(
-      `/api/notes/${videoId}`,
-      {
-        note: note,
-      },
-      config
-    );
+    const { data } = await axios.post(`${APP_URL}/api/notes/${videoId}`, {
+      note: note,
+    });
     if (data.ok) {
       successToast("Note Added");
       selectVideo({
         videoId: videoId,
         dispatch: dispatch,
         setLoading: setLoading,
-        token: token,
       });
     }
     setLoading(false);
@@ -340,28 +274,16 @@ export const addNotes = async ({
   }
 };
 
-export const deleteNote = async ({
-  noteId,
-  videoId,
-  setLoading,
-  token,
-  dispatch,
-}) => {
+export const deleteNote = async ({ noteId, videoId, setLoading, dispatch }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.delete(`/api/notes/${noteId}`, config);
+    const { data } = await axios.delete(`${APP_URL}/api/notes/${noteId}`);
     if (data.ok) {
       successToast("Note deleted");
       selectVideo({
         videoId: videoId,
         dispatch: dispatch,
         setLoading: setLoading,
-        token: token,
       });
     }
     setLoading(false);
@@ -372,14 +294,12 @@ export const deleteNote = async ({
   }
 };
 
-export const addToHistory = async ({ videoId, token, dispatch }) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+export const addToHistory = async ({ videoId, dispatch }) => {
   try {
-    const { data } = await axios.put(`/api/histories/${videoId}`, null, config);
+    const { data } = await axios.put(
+      `${APP_URL}/api/histories/${videoId}`,
+      null
+    );
     dispatch({
       type: "ADD_TO_HISTORY",
       payload: [...data.data],
@@ -390,26 +310,15 @@ export const addToHistory = async ({ videoId, token, dispatch }) => {
   }
 };
 
-export const addLikeToVideo = async ({
-  videoId,
-  setLoading,
-  token,
-  dispatch,
-}) => {
+export const addLikeToVideo = async ({ videoId, setLoading, dispatch }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.put(`/api/likes/${videoId}`, null, config);
+    const { data } = await axios.put(`${APP_URL}/api/likes/${videoId}`, null);
     if (data.ok) {
       selectVideo({
         videoId: videoId,
         dispatch: dispatch,
         setLoading: setLoading,
-        token: token,
       });
       successToast("Video liked");
     }
@@ -421,21 +330,15 @@ export const addLikeToVideo = async ({
   }
 };
 
-export const removeLikeFromVideo = async ({ like, setLoading, token, dispatch }) => {
+export const removeLikeFromVideo = async ({ like, setLoading, dispatch }) => {
   setLoading(true);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
   try {
-    const { data } = await axios.delete(`/api/likes/${like._id}`, config);
+    const { data } = await axios.delete(`${APP_URL}/api/likes/${like._id}`);
     if (data.ok) {
       selectVideo({
         videoId: like.video,
         dispatch: dispatch,
         setLoading: setLoading,
-        token: token,
       });
       successToast("Like removed");
     }
@@ -458,7 +361,6 @@ export const filterByCatagory = ({
   dispatch,
   fullVideoList,
   setLoading,
-  token,
 }) => {
   dispatch({
     type: "FILTER_VIDEO_BY_CATAGORY",
@@ -472,6 +374,5 @@ export const filterByCatagory = ({
       )[0]._id,
       dispatch: dispatch,
       setLoading: setLoading,
-      token: token,
     });
 };

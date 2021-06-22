@@ -22,7 +22,7 @@ import {
   addVideoToPlaylist,
   removeFromPlaylist,
   swapPlaylist,
-  filterByCatagory
+  filterByCatagory,
 } from "./VideoReducer";
 import { useAuth } from "../";
 
@@ -70,7 +70,6 @@ export const VideoContextProvider = ({ children }) => {
     videoList: state.fullVideoList,
     catagoryId: state.currentCatagoryId,
   });
-  
 
   return (
     <VideoContext.Provider
