@@ -1,5 +1,5 @@
 import { APP_URL } from "../../axiosUtils";
-import { successToast, warningToast } from "../../UI/Toast/Toast";
+import { successToast, warningToast } from "../../components";
 import axios from "axios";
 
 export const VideoReducer = (state, action) => {

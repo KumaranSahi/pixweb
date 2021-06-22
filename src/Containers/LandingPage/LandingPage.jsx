@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
 import { HistoryPage } from "../History/History";
 import { SigninPage } from "../SigninPage/SigninPage";
-import Spinner from "../../UI/Spinner/Spinner";
+import { Spinner } from "../../components";
 
 import classes from "./LandingPage.module.css";
 

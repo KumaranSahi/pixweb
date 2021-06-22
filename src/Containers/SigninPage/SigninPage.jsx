@@ -1,6 +1,6 @@
 import classes from "./SigninPage.module.css";
 import { useAuth } from "../../store";
-import { warningToast } from "../../UI/Toast/Toast";
+import { warningToast } from "../../components";
 import { useSigninPageReducer } from "./SigninReducer";
 import {
   ChangePasswordComponent,
