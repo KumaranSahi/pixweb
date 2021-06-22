@@ -1,7 +1,7 @@
 import classes from "./Avatar.module.css";
 import { useState } from "react";
 import { useAuth } from "../../../../../store";
-import profileImage from "../../../../../Assets/profileimage.jpg";
+import profileImage from "../../../../../assets/profileimage.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, MenuItem } from "@material-ui/core";
 

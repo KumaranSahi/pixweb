@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./Logo.module.css";
-import logo from "../../../../../Assets/mk logo finD.png";
+import logo from "../../../../../assets/mk logo finD.png";
 
 export const Logo = () => {
   return (
