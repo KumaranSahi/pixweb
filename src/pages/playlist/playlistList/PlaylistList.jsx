@@ -12,6 +12,7 @@ export const PlaylistList = ({ name, videos, id }) => {
     setVideoLoading,
     videoDispatch,
     playlists,
+    videoLoading,
   } = useVideo();
   return (
     <div className={classes["playlist-list"]}>
@@ -21,6 +22,7 @@ export const PlaylistList = ({ name, videos, id }) => {
           icon={faTrash}
           className={classes["delete-playlist"]}
           onClick={() =>
+            !videoLoading &&
             deletePlaylist({
               playlistid: id,
               setLoading: setVideoLoading,
