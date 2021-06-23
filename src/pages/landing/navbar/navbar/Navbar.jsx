@@ -1,9 +1,9 @@
 import classes from "./Navbar.module.css";
-import { Logo } from "./Logo/Logo";
-import { Hamburger } from "./Hamburger/Hamburger";
-import { DesktopNavMenu } from "./DesktopNavMenu/DesktopNavMenu";
+import { Logo } from "./logo/Logo";
+import { Hamburger } from "./hamburger/Hamburger";
+import { DesktopNavMenu } from "./desktopNavMenu/DesktopNavMenu";
 import { useLocation } from "react-router-dom";
-import { Avatar } from "./Avatar/Avatar";
+import { Avatar } from "./avatar/Avatar";
 
 export const Navbar = () => {
   let { pathname } = useLocation();

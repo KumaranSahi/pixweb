@@ -3,9 +3,9 @@ import Youtube from "react-youtube";
 import { useState } from "react";
 import { useAuth, useVideo } from "../../../store";
 import { useLocation, useHistory } from "react-router-dom";
-import { Notes } from "./Notes/Notes";
-import { Likes } from "./Likes/Likes";
-import { Playlist } from "./Playlist/Playlist";
+import { Notes } from "./notes/Notes";
+import { Likes } from "./likes/Likes";
+import { Playlist } from "./playlist/Playlist";
 
 export const VideoPlayer = () => {
   const [openPlaylist, setOpenPlaylist] = useState(false);

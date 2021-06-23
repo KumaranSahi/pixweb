@@ -6,7 +6,7 @@ import {
   ChangePasswordComponent,
   SigninComponent,
   SignupComponent,
-} from "./SigninComponents";
+} from "./signinComponents";
 
 export const SigninPage = () => {
   const {

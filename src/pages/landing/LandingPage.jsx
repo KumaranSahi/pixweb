@@ -1,14 +1,14 @@
-import { Navbar } from "./NavBar/Navbar/Navbar";
-import { MobileNavBar } from "./NavBar/MobileNavBar/MobileNavBar";
-import { HomePage } from "../HomePage/HomePage";
+import { Navbar } from "./navbar/navbar/Navbar";
+import { MobileNavbar } from "./navbar/mobileNavbar/MobileNavbar";
+import { HomePage } from "../home/HomePage";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import { Catagories } from "../Catagories/Catagories";
+import { Catagories } from "../catagories/Catagories";
 import { useAuth, useVideo } from "../../store";
-import { PlaylistPage } from "../PlaylistPage/PlaylistPage";
+import { PlaylistPage } from "../playlist/PlaylistPage";
 import { useEffect } from "react";
-import { VideoPlayer } from "../Catagories/VideoPlayer/VideoPlayer";
-import { HistoryPage } from "../History/History";
-import { SigninPage } from "../SigninPage/SigninPage";
+import { VideoPlayer } from "../catagories/videoPlayer/VideoPlayer";
+import { HistoryPage } from "../history/History";
+import { SigninPage } from "../signin/SigninPage";
 import { Spinner } from "../../components";
 
 import classes from "./LandingPage.module.css";
@@ -51,7 +51,7 @@ export const LandingPage = () => {
           <Route path="/" component={HomePage} />
         </Switch>
       </div>
-      <MobileNavBar />
+      <MobileNavbar />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import classes from "./PlaylistPage.module.css";
 import { useVideo } from "../../store";
-import { PlaylistList } from "./PlaylistList/PlaylistList";
+import { PlaylistList } from "./playlistList/PlaylistList";
 
 export const PlaylistPage = () => {
   const { playlists } = useVideo();

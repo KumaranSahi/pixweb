@@ -1,6 +1,6 @@
 import classes from "./Hamburger.module.css";
 import { useState } from "react";
-import { Dropdown } from "../Drop/Dropdown";
+import { Dropdown } from "../dropdown/Dropdown";
 
 export const Hamburger = () => {
   const [iconClicked, seticonClicked] = useState(false);

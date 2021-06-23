@@ -1,9 +1,9 @@
-import classes from "./MobileNavBar.module.css";
+import classes from "./MobileNavbar.module.css";
 import { faHome, faHistory, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 
-export const MobileNavBar = () => {
+export const MobileNavbar = () => {
   return (
     <div className={classes["mobile-nav-bar"]}>
       <p className={classes["nav-button"]}>

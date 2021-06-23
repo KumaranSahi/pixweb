@@ -2,8 +2,8 @@ import classes from "./Catagories.module.css";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth, useVideo } from "../../store";
-import { VideoNameList } from "../VideoNameList/VideoNameList";
-import { VideoPlayer } from "./VideoPlayer/VideoPlayer";
+import { VideoNameList } from "../videoNameList/VideoNameList";
+import { VideoPlayer } from "./videoPlayer/VideoPlayer";
 
 export const Catagories = () => {
   const { id } = useParams();

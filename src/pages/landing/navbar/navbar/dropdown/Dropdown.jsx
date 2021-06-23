@@ -1,5 +1,5 @@
 import classes from "./Dropdown.module.css";
-import { VideoNameList } from "../../../../VideoNameList/VideoNameList";
+import { VideoNameList } from "../../../../videoNameList/VideoNameList";
 
 export const Dropdown = ({ open, closeDropDown }) => {
   return open ? (
