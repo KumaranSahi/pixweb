@@ -26,7 +26,6 @@ export const Playlist = ({ setOpenPlaylist }) => {
       addNewPlaylist({
         newPlaylistName: newPlaylistName,
         setLoading: setVideoLoading,
-        token: token,
         dispatch: videoDispatch,
         playlists: playlists,
       });
@@ -46,7 +45,6 @@ export const Playlist = ({ setOpenPlaylist }) => {
       addVideoToPlaylist({
         selectedVideo: selectedVideo,
         selectedPlaylist: selectedPlaylist,
-        token: token,
         playlists: playlists,
         setLoading: setVideoLoading,
         dispatch: videoDispatch,
@@ -55,7 +53,6 @@ export const Playlist = ({ setOpenPlaylist }) => {
       swapPlaylist({
         selectedVideo: selectedVideo,
         selectedPlaylist: selectedPlaylist,
-        token: token,
         playlists: playlists,
         setLoading: setVideoLoading,
         dispatch: videoDispatch,
@@ -64,7 +61,6 @@ export const Playlist = ({ setOpenPlaylist }) => {
       removeFromPlaylist({
         selectedVideo: selectedVideo,
         selectedPlaylist: selectedPlaylist,
-        token: token,
         playlists: playlists,
         setLoading: setVideoLoading,
         dispatch: videoDispatch,

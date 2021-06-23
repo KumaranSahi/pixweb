@@ -19,12 +19,12 @@ const VideoPlayerRoute = ({ ...props }) => {
 };
 
 const PrivateLink = ({ ...props }) => {
-  const { token } = useAuth();
+  const token = localStorage.getItem("token");
   return token ? <Route {...props} /> : <Redirect to="/login" />;
 };
 
 const LockLogin = ({ ...props }) => {
-  const { token } = useAuth();
+  const token = localStorage.getItem("token");
   return token ? <Redirect to="/" /> : <Route {...props} />;
 };
 

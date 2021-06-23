@@ -39,7 +39,6 @@ export const VideoPlayer = () => {
         onPlay={() => {
           addToHistory({
             videoId: selectedVideo._id,
-            token: token,
             dispatch: videoDispatch,
           });
         }}
@@ -71,7 +70,6 @@ export const VideoPlayer = () => {
                 videoId: selectedVideo._id,
                 note: note,
                 setLoading: setVideoLoading,
-                token: token,
                 dispatch: videoDispatch,
               });
               setNote("");

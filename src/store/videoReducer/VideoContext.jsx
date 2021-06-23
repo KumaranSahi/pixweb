@@ -63,6 +63,7 @@ export const VideoContextProvider = ({ children }) => {
     fullVideoList: [],
     currentCatagoryId: null,
     selectedVideo: null,
+    selectedPlaylist: null,
     playlists: [],
     history: [],
   });
@@ -76,24 +77,21 @@ export const VideoContextProvider = ({ children }) => {
       value={{
         videoDispatch: dispatch,
         videosByCatagory: filteredData,
-        selectedVideo: state.selectedVideo,
         filterByCatagory: filterByCatagory,
         addVideoToPlaylist: addVideoToPlaylist,
         swapPlaylist: swapPlaylist,
         removeFromPlaylist: removeFromPlaylist,
-        playlists: state.playlists,
         addNewPlaylist: addNewPlaylist,
         addToHistory: addToHistory,
         addLikeToVideo: addLikeToVideo,
         removeLikeFromVideo: removeLikeFromVideo,
         selectVideo: selectVideo,
         deletePlaylist: deletePlaylist,
-        history: state.history,
         addNotes: addNotes,
         deleteNote: deleteNote,
         videoLoading: loading,
         setVideoLoading: setLoading,
-        fullVideoList: state.fullVideoList,
+        ...state,
       }}
     >
       {children}

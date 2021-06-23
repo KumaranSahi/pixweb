@@ -1,6 +1,6 @@
 import classes from "./PlaylistList.module.css";
 import { useHistory } from "react-router-dom";
-import { useVideo, useAuth } from "../../../store";
+import { useVideo } from "../../../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +13,6 @@ export const PlaylistList = ({ name, videos, id }) => {
     videoDispatch,
     playlists,
   } = useVideo();
-  const { token } = useAuth();
   return (
     <div className={classes["playlist-list"]}>
       <h2>
@@ -25,7 +24,6 @@ export const PlaylistList = ({ name, videos, id }) => {
             deletePlaylist({
               playlistid: id,
               setLoading: setVideoLoading,
-              token: token,
               dispatch: videoDispatch,
               playlists: playlists,
             })
@@ -43,7 +41,6 @@ export const PlaylistList = ({ name, videos, id }) => {
                   videoId: video._id,
                   dispatch: videoDispatch,
                   setLoading: setVideoLoading,
-                  token: token,
                 });
                 push("/video-player");
               }}

@@ -25,6 +25,11 @@ export const VideoReducer = (state, action) => {
         ...state,
         selectedVideo: { ...action.payload },
       };
+    case "SELECT_PLAYLIST":
+      return {
+        ...state,
+        selectedPlaylist: { ...action.payload },
+      };
     case "ADD_TO_HISTORY":
       return {
         ...state,

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const Notes = ({ name, note, id, noteId, videoId }) => {
-  const { token, userId } = useAuth();
+  const { userId } = useAuth();
   const { deleteNote, setVideoLoading, videoDispatch } = useVideo();
   return (
     <div className={classes["note"]}>
@@ -18,7 +18,6 @@ export const Notes = ({ name, note, id, noteId, videoId }) => {
                 noteId: noteId,
                 videoId: videoId,
                 setLoading: setVideoLoading,
-                token: token,
                 dispatch: videoDispatch,
               });
             }}

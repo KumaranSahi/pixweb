@@ -6,12 +6,22 @@ import { useLocation } from "react-router-dom";
 import { Avatar } from "./avatar/Avatar";
 
 export const Navbar = () => {
-  let { pathname } = useLocation();
+  const { pathname } = useLocation();
+  const renderLogo = () => {
+    if (
+      pathname === "/video-player" ||
+      pathname === "/history" ||
+      pathname === "/login" ||
+      pathname === "/"
+    )
+      return <Logo />;
+  };
   return (
     <nav>
       <div className={classes["navbar"]}>
-        {pathname.slice(0, 9) === "/catagory" && <Hamburger />}
-        {pathname.slice(0, 9) !== "/catagory" && <Logo />}
+        {(pathname.slice(0, 9) === "/catagory" ||
+          pathname === "/my-playlist") && <Hamburger />}
+        {renderLogo()}
         <div className={classes["alignment-div"]}></div>
         <Avatar />
       </div>

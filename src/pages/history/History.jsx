@@ -1,11 +1,10 @@
 import classes from "./History.module.css";
-import { useVideo,useAuth } from "../../store";
+import { useVideo } from "../../store";
 import { useHistory } from "react-router-dom";
 
 export const HistoryPage = () => {
   const { push } = useHistory();
   const { history, selectVideo, videoDispatch, setVideoLoading } = useVideo();
-    const {token}=useAuth()
   return (
     <div className={classes["history-container"]}>
       <h1>History:</h1>
@@ -20,7 +19,6 @@ export const HistoryPage = () => {
                   videoId: video._id,
                   dispatch: videoDispatch,
                   setLoading: setVideoLoading,
-                  token:token,
                 });
                 push("/video-player");
               }}

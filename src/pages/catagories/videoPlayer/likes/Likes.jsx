@@ -19,7 +19,6 @@ export const Likes = () => {
       removeLikeFromVideo({
         like: selectedVideo.likes.filter(({ by }) => by === userId)[0],
         setLoading: setVideoLoading,
-        token: token,
         dispatch: videoDispatch,
       });
     } else push("/login");
@@ -30,7 +29,6 @@ export const Likes = () => {
       addLikeToVideo({
         videoId: selectedVideo._id,
         setLoading: setVideoLoading,
-        token: token,
         dispatch: videoDispatch,
       });
     } else push("/login");
