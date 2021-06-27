@@ -4,6 +4,7 @@ import { useAuth } from "../../../../../store";
 import profileImage from "../../../../../assets/profileimage.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, MenuItem } from "@material-ui/core";
+import { setupAuthHeaderForServiceCalls } from "../../../../../axiosUtils";
 
 export const Avatar = () => {
   const { userName, signOutUser, authDispatch } = useAuth();
@@ -20,6 +21,7 @@ export const Avatar = () => {
 
   const handleLogout = () => {
     signOutUser({ dispatch: authDispatch });
+    setupAuthHeaderForServiceCalls(null);
     handleClose();
   };
 

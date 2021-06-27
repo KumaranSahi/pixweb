@@ -8,3 +8,15 @@ export const setupAuthHeaderForServiceCalls = (token) => {
 };
 
 export const APP_URL = "https://pixweb-api.herokuapp.com";
+
+export const setupAuthExceptionHandler = (push) => {
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === 401) {
+        push("/login");
+      }
+      return Promise.reject(error);
+    }
+  );
+};
