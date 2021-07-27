@@ -9,6 +9,7 @@ export const SignupComponent = ({
   emailValid,
   password,
   authLoading,
+  passwordValid,
 }) => {
   return (
     <>
@@ -65,6 +66,11 @@ export const SignupComponent = ({
             })
           }
         />
+        {!passwordValid && (
+          <p className={classes["error-text"]}>
+            Password should be atleast 8 characters with atleast 1 number
+          </p>
+        )}
         <button
           type="submit"
           className={`${classes["button-solid"]} ${classes["button-primary"]}`}

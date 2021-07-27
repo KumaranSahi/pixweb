@@ -26,29 +26,49 @@ export const SigninPage = () => {
     emailValid,
     password,
     confirmPassword,
+    passwordValid,
     signinPageDispatch,
   } = useSigninPageReducer();
 
-  const validateUserName = () => {
-    if (userName.length === 0)
+  const validateUserName = (userName) => {
+    if (userName.length === 0) {
       signinPageDispatch({ type: "SET_USERNAME_VALID", payload: false });
-    else signinPageDispatch({ type: "SET_USERNAME_VALID", payload: true });
+      return false;
+    }
+    signinPageDispatch({ type: "SET_USERNAME_VALID", payload: true });
+    return true;
   };
 
-  const validateEmail = () => {
+  const validateEmail = (email) => {
     if (
       email.length > 0 &&
       new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$").test(email)
-    )
+    ) {
       signinPageDispatch({ type: "SET_EMAIL_VALID", payload: true });
-    else signinPageDispatch({ type: "SET_EMAIL_VALID", payload: false });
+      return true;
+    }
+    signinPageDispatch({ type: "SET_EMAIL_VALID", payload: false });
+    return false;
+  };
+
+  const validatePassword = (password) => {
+    if (
+      password.length > 0 &&
+      new RegExp("^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,16}$").test(password)
+    ) {
+      signinPageDispatch({ type: "SET_PASSWORD_VALID", payload: true });
+      return true;
+    } else signinPageDispatch({ type: "SET_PASSWORD_VALID", payload: false });
+    return false;
   };
 
   const signupSubmit = async (event) => {
     event.preventDefault();
-    validateUserName();
-    validateEmail();
-    if (userNameValid && emailValid) {
+    if (
+      validateUserName(userName) &&
+      validateEmail(email) &&
+      validatePassword(password)
+    ) {
       signUpUser({
         userData: {
           name: userName,
@@ -56,14 +76,14 @@ export const SigninPage = () => {
           password: password,
         },
         setLoading: setAuthLoading,
-        setCurrentPage: setAuthCurrentPage,
+        dispatch: authDispatch,
       });
     }
   };
 
   const signInSubmit = async (event) => {
-    event.preventDefault();
-    validateEmail();
+    event && event.preventDefault();
+    validateEmail(email);
     if (emailValid)
       signInUser({
         userData: {
@@ -77,20 +97,33 @@ export const SigninPage = () => {
 
   const changePasswordSubmit = async (event) => {
     event.preventDefault();
-    validateEmail();
+    validateEmail(email);
     if (password === confirmPassword) {
-      changePassword({
-        userData: {
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
-        },
-        setLoading: setAuthLoading,
-        setCurrentPage: setAuthCurrentPage,
-      });
+      if (validatePassword(password) && validatePassword(confirmPassword)) {
+        changePassword({
+          userData: {
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+          },
+          setLoading: setAuthLoading,
+          setCurrentPage: setAuthCurrentPage,
+        });
+      }
     } else {
       warningToast("Passwords do not match");
     }
+  };
+
+  const updateGuestCredentials = () => {
+    signinPageDispatch({
+      type: "ADD_EMAIL",
+      payload: "testuser@test.com",
+    });
+    signinPageDispatch({
+      type: "ADD_PASSWORD",
+      payload: "testuser1",
+    });
   };
 
   const pageToRender = () => {
@@ -106,6 +139,7 @@ export const SigninPage = () => {
             userName={userName}
             userNameValid={userNameValid}
             authLoading={authLoading}
+            passwordValid={passwordValid}
           />
         );
       case "SIGNIN_PAGE":
@@ -128,6 +162,7 @@ export const SigninPage = () => {
             password={password}
             signinPageDispatch={signinPageDispatch}
             authLoading={authLoading}
+            passwordValid={passwordValid}
           />
         );
       default:
@@ -141,6 +176,7 @@ export const SigninPage = () => {
             userName={userName}
             userNameValid={userNameValid}
             authLoading={authLoading}
+            passwordValid={passwordValid}
           />
         );
     }
@@ -156,6 +192,12 @@ export const SigninPage = () => {
       <div className={classes["login"]}>
         <div className={classes["signin-signup-container"]}>
           {pageToRender()}
+          <p
+            className={classes["switch-page"]}
+            onClick={() => updateGuestCredentials()}
+          >
+            Sign-in as guest
+          </p>
           {currentPage === "SIGNIN_PAGE" && (
             <p
               className={classes["switch-page"]}

@@ -28,6 +28,11 @@ export const useSigninPageReducer = () => {
           ...state,
           password: action.payload,
         };
+      case "SET_PASSWORD_VALID":
+        return {
+          ...state,
+          passwordValid: action.payload,
+        };
       case "ADD_CONFIRM_PASSWORD":
         return {
           ...state,
@@ -43,6 +48,7 @@ export const useSigninPageReducer = () => {
     email: "",
     emailValid: true,
     password: "",
+    passwordValid: true,
     confirmPassword: "",
   });
   return {

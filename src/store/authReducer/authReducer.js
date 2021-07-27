@@ -25,13 +25,28 @@ export const authReducer = (state, action) => {
   }
 };
 
-export const signUpUser = async ({ userData, setLoading, setCurrentPage }) => {
+export const signUpUser = async ({ userData, setLoading, dispatch }) => {
   setLoading(true);
   try {
     const { data } = await axios.post(`${APP_URL}/api/users/signup`, userData);
     if (data.ok) {
       successToast("User Added Successfully");
-      setCurrentPage("SIGNIN_PAGE");
+      setupAuthHeaderForServiceCalls(data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userId", data.userId);
+      const expiresIn = new Date(new Date().getTime() + 86400000);
+      localStorage.setItem("expiresIn", expiresIn);
+      checkAuthTimeout({ expirationTime: 86400, dispatch: dispatch });
+      dispatch({
+        type: "SIGNIN_USER",
+        payload: {
+          token: data.token,
+          userName: data.userName,
+          expiresIn: expiresIn,
+          userId: data.userId,
+        },
+      });
       setLoading(false);
     }
   } catch (error) {

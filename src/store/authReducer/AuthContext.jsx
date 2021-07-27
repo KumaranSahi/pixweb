@@ -13,6 +13,7 @@ import {
   signOutUser,
   changePassword,
 } from "./authReducer";
+import { setupAuthHeaderForServiceCalls } from "../../axiosUtils";
 
 export const AuthContext = createContext();
 
@@ -21,6 +22,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState("SIGNIN_PAGE");
+  const token = localStorage.getItem("token");
+  setupAuthHeaderForServiceCalls(token);
 
   const [state, dispatch] = useReducer(authReducer, {
     token: null,

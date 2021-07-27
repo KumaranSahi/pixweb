@@ -1,4 +1,4 @@
-import classes from '../SigninPage.module.css'
+import classes from "../SigninPage.module.css";
 
 export const ChangePasswordComponent = ({
   changePasswordSubmit,
@@ -7,6 +7,7 @@ export const ChangePasswordComponent = ({
   password,
   confirmPassword,
   authLoading,
+  passwordValid,
 }) => {
   return (
     <>
@@ -41,6 +42,12 @@ export const ChangePasswordComponent = ({
             })
           }
         />
+
+        {!passwordValid && (
+          <p className={classes["error-text"]}>
+            Password should be atleast 8 characters with atleast 1 number
+          </p>
+        )}
         <input
           type="password"
           className={classes["textbox"]}
@@ -54,6 +61,12 @@ export const ChangePasswordComponent = ({
             })
           }
         />
+
+        {!passwordValid && (
+          <p className={classes["error-text"]}>
+            Password should be atleast 8 characters with atleast 1 number
+          </p>
+        )}
         <button
           type="submit"
           className={`${classes["button-solid"]} ${classes["button-primary"]}`}
