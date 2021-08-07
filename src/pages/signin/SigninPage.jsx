@@ -18,6 +18,7 @@ export const SigninPage = () => {
     setAuthLoading,
     authDispatch,
     authLoading,
+    signInGuest,
   } = useAuth();
   const {
     userName,
@@ -116,13 +117,9 @@ export const SigninPage = () => {
   };
 
   const updateGuestCredentials = () => {
-    signinPageDispatch({
-      type: "ADD_EMAIL",
-      payload: "testuser@test.com",
-    });
-    signinPageDispatch({
-      type: "ADD_PASSWORD",
-      payload: "testuser1",
+    signInGuest({
+      setLoading: setAuthLoading,
+      dispatch: authDispatch,
     });
   };
 

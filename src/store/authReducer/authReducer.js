@@ -155,3 +155,36 @@ export const signInUser = async ({ userData, setLoading, dispatch }) => {
     setLoading(false);
   }
 };
+
+export const signInGuest = async ({ setLoading, dispatch }) => {
+  
+  try {
+    const {
+      data: { data },
+    } = await axios.get(`${APP_URL}/api/users/guest-signin`);
+    if (data.ok) {
+      setupAuthHeaderForServiceCalls(data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userId", data.userId);
+      const expiresIn = new Date(new Date().getTime() + 86400000);
+      localStorage.setItem("expiresIn", expiresIn);
+      checkAuthTimeout({ expirationTime: 86400, dispatch: dispatch });
+      dispatch({
+        type: "SIGNIN_USER",
+        payload: {
+          token: data.token,
+          userName: data.userName,
+          expiresIn: expiresIn,
+          userId: data.userId,
+        },
+      });
+      successToast("User Logged in Successfully");
+      setLoading(false);
+    }
+  } catch (error) {
+    warningToast("Invalid username or password");
+    console.log(error);
+    setLoading(false);
+  }
+};

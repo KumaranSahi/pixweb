@@ -12,6 +12,7 @@ import {
   onReload,
   signOutUser,
   changePassword,
+  signInGuest,
 } from "./authReducer";
 import { setupAuthHeaderForServiceCalls } from "../../axiosUtils";
 
@@ -49,6 +50,7 @@ export const AuthContextProvider = ({ children }) => {
         signOutUser: signOutUser,
         currentPage: currentPage,
         changePassword: changePassword,
+        signInGuest: signInGuest,
         setAuthCurrentPage: setCurrentPage,
         authLoading: loading,
         setAuthLoading: setLoading,
